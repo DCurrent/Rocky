@@ -1,5 +1,5 @@
 <?php 
-	abstract class ROCKY_ACCESS_SETTINGS
+	abstract class ACCESS_SETTINGS
 	{	
 		const ADMINISTRATOR		= 'dvcask2';			// Administrator.
 		const LDAP_HOST			= 'ukldap.uky.edu';		// LDAP host.
@@ -12,7 +12,7 @@
 		const USE_LOCAL			= FALSE;				// Attempt to log in user with local account.
 	}
 	
-	abstract class ROCKY_ACCESS_SES_KEY
+	abstract class ACCESS_SES_KEY
 	{
 		const REDIRECT	= 'access_redirect';	// URL to send user on successfull login.
 		const ACCOUNT	= 'access_cn';			// Session ID of account name currently in session.
@@ -22,7 +22,7 @@
 		const EMAIL		= 'access_email';
 	}
 	
-	abstract class ROCKY_ACCESS_LOGIN_RESULT
+	abstract class ACCESS_LOGIN_RESULT
 	{
 		const NO_INPUT		= 0;	// Account and password fields left empty by user.
 		const LOCAL			= 1;	// Login success through local account.
@@ -35,7 +35,7 @@
 		const LOGOFF		= 8;	// User requested log off.
 	}
 	
-	abstract class ROCKY_ACCESS_AUTHORIZED_RESULT
+	abstract class ACCESS_AUTHORIZED_RESULT
 	{
 		const NONE	= 0;
 		const NO	= 1;

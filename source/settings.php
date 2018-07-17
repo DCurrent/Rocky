@@ -1,6 +1,6 @@
 <?php
 
-	abstract class ROCKY_APPLICATION_SETTINGS
+	abstract class APPLICATION_SETTINGS
 	{
 		const VERSION 			= 0.1;
 		const NAME				= 'EHS Training';
@@ -8,12 +8,12 @@
 		const TIME_FORMAT		= 'Y-m-d H:i:s';
 	}
 
-	abstract class ROCKY_DATABASE
+	abstract class DATABASE
 	{
 		const NAME	= 'ehs_training';
 	}
 
-	abstract class ROCKY_MAILING
+	abstract class MAILING
 	{
 		const
 			TO		= '',

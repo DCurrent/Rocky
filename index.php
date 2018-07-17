@@ -5,8 +5,10 @@
 	
 	//$page_obj = new class_page_cache();
 	
-	$access_obj = new rocky_class_access();
-	$access_obj->login();
+	//Get and verify log in status.
+	$access_obj = new \dc\stoeckl\status();
+	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);	
+	$access_obj->verify();
 		
 	// Set up navigaiton.
 	$navigation_obj = new class_navigation();
@@ -19,7 +21,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?> - Link Blue</title>        
+        <title><?php echo APPLICATION_SETTINGS::NAME; ?> - Link Blue</title>        
         
          <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -57,7 +59,7 @@
         <div id="container" class="container">            
             <?php echo $navigation_obj->get_markup_nav(); ?>                                                                                
             <div class="page-header">
-                <h1><?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?></h1>
+                <h1><?php echo APPLICATION_SETTINGS::NAME; ?></h1>
                 <p>
 				<?php
 				
@@ -81,13 +83,13 @@
 							echo "Good evening ";
 						}
 						echo $access_obj->get_name_f();
-				?>! Thank you for using <?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?>. To get started, select an item from the navigation bar.</p>
+				?>! Thank you for using <?php echo APPLICATION_SETTINGS::NAME; ?>. To get started, select an item from the navigation bar.</p>
                 <?php
 					}
 					else
 					{
 				?>
-                		<p>Welcome to <?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?>. In order to use <?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?>, please log in using your <a href="#" data-toggle="modal" data-target="#help_link_blue">Link Blue</a> account and password.</p>
+                		<p>Welcome to <?php echo APPLICATION_SETTINGS::NAME; ?>. In order to use <?php echo APPLICATION_SETTINGS::NAME; ?>, please log in using your <a href="#" data-toggle="modal" data-target="#help_link_blue">Link Blue</a> account and password.</p>
             		
                     	<p><?php echo $access_obj->get_dialog(); ?></p>
                     	

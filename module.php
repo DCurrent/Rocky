@@ -13,7 +13,7 @@
 				
 	// Set up database.
 	$db_conn_set = new class_db_connect_params();
-	$db_conn_set->set_name(ROCKY_DATABASE::NAME);
+	$db_conn_set->set_name(DATABASE::NAME);
 	$db_conn_set->set_user('ehsinfo_public');
 	$db_conn_set->set_password('eh$inf0');
 	
@@ -254,7 +254,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?>, Module Detail</title>        
+        <title><?php echo APPLICATION_SETTINGS::NAME; ?>, Module Detail</title>        
         
          <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">

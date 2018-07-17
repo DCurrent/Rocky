@@ -34,7 +34,7 @@
 		
 	// Set up database.
 		$db_conn_set = new class_db_connect_params();
-		$db_conn_set->set_name(ROCKY_DATABASE::NAME);
+		$db_conn_set->set_name(DATABASE::NAME);
 		//$db_conn_set->set_user('ehsinfo_public');
 		//$db_conn_set->set_password('eh$inf0');
 		
@@ -159,7 +159,7 @@
 													
 			$params = array(array($_main_data->get_id(), 				SQLSRV_PARAM_IN),
 						array($_main_data->get_account(), 				SQLSRV_PARAM_IN),
-						array(date(ROCKY_APPLICATION_SETTINGS::TIME_FORMAT),	SQLSRV_PARAM_IN),
+						array(date(APPLICATION_SETTINGS::TIME_FORMAT),	SQLSRV_PARAM_IN),
 						array($_main_data->get_account(), 				SQLSRV_PARAM_IN),
 						array($access_obj->get_ip(), 					SQLSRV_PARAM_IN),
 						array($_main_data->get_name_f(), 				SQLSRV_PARAM_IN),						
@@ -171,7 +171,7 @@
 						array($_main_data->get_supervisor_name_l(), 	SQLSRV_PARAM_IN),
 						array($_main_data->get_email(), 				SQLSRV_PARAM_IN),
 						array($_main_data->get_phone(), 				SQLSRV_PARAM_IN),
-						array(date(ROCKY_APPLICATION_SETTINGS::TIME_FORMAT),	SQLSRV_PARAM_IN));
+						array(date(APPLICATION_SETTINGS::TIME_FORMAT),	SQLSRV_PARAM_IN));
 			
 			//var_dump($params);
 			
@@ -221,7 +221,7 @@
 <!DOCtype html>
     <head>
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?> - Register</title>        
+        <title><?php echo APPLICATION_SETTINGS::NAME; ?> - Register</title>        
         
          <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -241,7 +241,7 @@
         <div id="container" class="container"> 
         	<?php echo $obj_navigation_main->get_markup_nav(); ?>                                                                                
             <div class="page-header">
-            <h1><?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?> - Register</h1> 
+            <h1><?php echo APPLICATION_SETTINGS::NAME; ?> - Register</h1> 
             
             <?php echo $dialog; ?>
             

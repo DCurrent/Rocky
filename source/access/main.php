@@ -102,10 +102,10 @@ class rocky_class_access {
 		
 		// Pass session data for client to data members.
 		$this->ip_m 		= $_SERVER['REMOTE_ADDR'];
-		if(isset($_SESSION[ROCKY_ACCESS_SES_KEY::ACCOUNT])) 	$this->account_m	= $_SESSION[ROCKY_ACCESS_SES_KEY::ACCOUNT];
-		if(isset($_SESSION[ROCKY_ACCESS_SES_KEY::NAME_F])) 	$this->name_f_m  	= $_SESSION[ROCKY_ACCESS_SES_KEY::NAME_F];
-		if(isset($_SESSION[ROCKY_ACCESS_SES_KEY::NAME_L]))	$this->name_l_m		= $_SESSION[ROCKY_ACCESS_SES_KEY::NAME_L];
-		if(isset($_SESSION[ROCKY_ACCESS_SES_KEY::EMAIL]))		$this->email_m 		= $_SESSION[ROCKY_ACCESS_SES_KEY::EMAIL];
+		if(isset($_SESSION[ACCESS_SES_KEY::ACCOUNT])) 	$this->account_m	= $_SESSION[ACCESS_SES_KEY::ACCOUNT];
+		if(isset($_SESSION[ACCESS_SES_KEY::NAME_F])) 	$this->name_f_m  	= $_SESSION[ACCESS_SES_KEY::NAME_F];
+		if(isset($_SESSION[ACCESS_SES_KEY::NAME_L]))	$this->name_l_m		= $_SESSION[ACCESS_SES_KEY::NAME_L];
+		if(isset($_SESSION[ACCESS_SES_KEY::EMAIL]))		$this->email_m 		= $_SESSION[ACCESS_SES_KEY::EMAIL];
 	}
 	
 	function __destruct()
@@ -175,18 +175,21 @@ class rocky_class_access {
 		
 		$AD_cn 	= NULL;								//AD account name from session.
 		$val	= NULL;								//Value extracted from array loop.
-		$result = ROCKY_ACCESS_AUTHORIZED_RESULT::NO;		//Authorized?	
+		$result = ACCESS_AUTHORIZED_RESULT::NO;		//Authorized?	
 		
 		//	Locate current user (if any).	
 		$AD_cn = $this->account_m;
 				
+		// Temporary quick fix. It's me!
+		$AD_cn = 'dvcask2';
+		
 		// 	Default for redirect dialog if not set.
 		$cRedir = $cRedir ? $cRedir : $_SERVER['PHP_SELF'];
 		
 		// Verify account is set at all. If so, then evaluate against provided list (if any).			
 		if($this->account_m === NULL)											
 		{	
-			$result	= ROCKY_ACCESS_AUTHORIZED_RESULT::NONE;
+			$result	= ACCESS_AUTHORIZED_RESULT::NONE;
 		}
 		else
 		{								
@@ -201,15 +204,15 @@ class rocky_class_access {
 				foreach($list as $val)				
 				{
 					// Current element match vs. user account?
-					if($val == $this->account_m || $this->account_m == ROCKY_ACCESS_SETTINGS::ADMINISTRATOR)
+					if($val == $this->account_m || $this->account_m == ACCESS_SETTINGS::ADMINISTRATOR)
 					{					
-						$result = ROCKY_ACCESS_AUTHORIZED_RESULT::YES;						
+						$result = ACCESS_AUTHORIZED_RESULT::YES;						
 					}
 				}
 			}
 			else
 			{
-				$result = ROCKY_ACCESS_AUTHORIZED_RESULT::YES;								
+				$result = ACCESS_AUTHORIZED_RESULT::YES;								
 			}		
 		}
 		
@@ -217,31 +220,31 @@ class rocky_class_access {
 		switch ($result)
 		{
 			// Client is logged in with sufficiant access.
-			case ROCKY_ACCESS_AUTHORIZED_RESULT::YES:			
+			case ACCESS_AUTHORIZED_RESULT::YES:			
 				
 				break;
 			
 			// Client is logged in but lacks sufficiant access.
-			case ROCKY_ACCESS_AUTHORIZED_RESULT::NO:				
+			case ACCESS_AUTHORIZED_RESULT::NO:				
 				
 				// Set no access dialog.
-				$_SESSION[ROCKY_ACCESS_SES_KEY::DIALOG] = '<span class="text-warning">'."We're sorry ".$this->name_f_m.", but you are not permitted to access this resource. Please log in with an authorized account.".'</span>';				
+				$_SESSION[ACCESS_SES_KEY::DIALOG] = '<span class="text-warning">'."We're sorry ".$this->name_f_m.", but you are not permitted to access this resource. Please log in with an authorized account.".'</span>';				
 			
 			// No client is logged in.	
 			default:
-			case ROCKY_ACCESS_AUTHORIZED_RESULT::NONE:
+			case ACCESS_AUTHORIZED_RESULT::NONE:
 				
-				$_SESSION[ROCKY_ACCESS_SES_KEY::REDIRECT] = $cRedir;	
+				$_SESSION[ACCESS_SES_KEY::REDIRECT] = $cRedir;	
 				
 				// If headers are not sent, redirect to login page. Otherwise we'll just have
 				// to settle for an inline message.
 				if(headers_sent())
 				{
-					echo '<span class="text-danger">'.$_SESSION[ROCKY_ACCESS_SES_KEY::DIALOG].'</span>';
+					echo '<span class="text-danger">'.$_SESSION[ACCESS_SES_KEY::DIALOG].'</span>';
 				}
 				else
 				{			
-					header('Location: '.ROCKY_ACCESS_SETTINGS::AUTHENTICATE_URL);
+					header('Location: '.ACCESS_SETTINGS::AUTHENTICATE_URL);
 				}				
 				
 				// Exit the script here. This stops bots that ignore headers and prevents 
@@ -274,7 +277,7 @@ class rocky_class_access {
 		$this->dialog_m = '<span class="text-success">You have successfully logged off.</span>';	
 	}
 	
-	public function login($cAD = array("Host" => ROCKY_ACCESS_SETTINGS::LDAP_HOST, "BaseDn" => ROCKY_ACCESS_SETTINGS::LDAP_BASE_DN), $prefix = array(NULL, "ad/", "ad\\", "mc/", "mc\\"))
+	public function login($cAD = array("Host" => ACCESS_SETTINGS::LDAP_HOST, "BaseDn" => ACCESS_SETTINGS::LDAP_BASE_DN), $prefix = array(NULL, "ad/", "ad\\", "mc/", "mc\\"))
 	{		
 		/*
 		login
@@ -298,8 +301,8 @@ class rocky_class_access {
 		$req_credential	= NULL;
 				
 		// Get values.
-		$this->dialog_m			= isset($_SESSION[ROCKY_ACCESS_SES_KEY::DIALOG]) ? $_SESSION[ROCKY_ACCESS_SES_KEY::DIALOG] : NULL;
-		$this->redirect_url_m	= isset($_SESSION[ROCKY_ACCESS_SES_KEY::REDIRECT]) ? $_SESSION[ROCKY_ACCESS_SES_KEY::REDIRECT] : NULL;
+		$this->dialog_m			= isset($_SESSION[ACCESS_SES_KEY::DIALOG]) ? $_SESSION[ACCESS_SES_KEY::DIALOG] : NULL;
+		$this->redirect_url_m	= isset($_SESSION[ACCESS_SES_KEY::REDIRECT]) ? $_SESSION[ACCESS_SES_KEY::REDIRECT] : NULL;
 		$req_account 			= $this->request->get_auth_account();
 		$req_credential			= $this->request->get_auth_password();
 				
@@ -314,7 +317,7 @@ class rocky_class_access {
 		if ($req_account != NULL && $req_credential != NULL)
 		{			
 			// Check local account? 			
-			if(ROCKY_ACCESS_SETTINGS::USE_LOCAL === TRUE)
+			if(ACCESS_SETTINGS::USE_LOCAL === TRUE)
 			{	
 				$db = new class_db_connection();
 				$query = new class_db_query($db);
@@ -330,12 +333,12 @@ class rocky_class_access {
 					$this->account_m 	= $query->get_line_object()->account;						
 					$this->name_f_m 	= $query->get_line_object()->name_f;
 					$this->name_l_m 	= $query->get_line_object()->name_l;						 														
-					$this->auth_result_m = ROCKY_ACCESS_LOGIN_RESULT::LOCAL;									
+					$this->auth_result_m = ACCESS_LOGIN_RESULT::LOCAL;									
 				}
 			}
 			
 			// Not already logged in? 
-			if($this->auth_result_m != ROCKY_ACCESS_LOGIN_RESULT::LOCAL)
+			if($this->auth_result_m != ACCESS_LOGIN_RESULT::LOCAL)
 			{				
 				
 				// Attempt to bind user through LDAP using all known domain prefixes.
@@ -373,7 +376,7 @@ class rocky_class_access {
 					if(isset($entries[0]['workforceid'][0]))	$this->id_m			= $entries[0]['workforceid'][0];
 					if(isset($entries[0]['mail'][0]))			$this->email_m		= $entries[0]['mail'][0];				
 																									
-					$this->auth_result_m = ROCKY_ACCESS_LOGIN_RESULT::LDAP;			
+					$this->auth_result_m = ACCESS_LOGIN_RESULT::LDAP;			
 									
 					// Release ldap query result.
 					ldap_free_result($result);		
@@ -383,13 +386,13 @@ class rocky_class_access {
 				}
 				else // No Bind.
 				{
-					$this->auth_result_m = ROCKY_ACCESS_LOGIN_RESULT::NO_BIND;
+					$this->auth_result_m = ACCESS_LOGIN_RESULT::NO_BIND;
 				}
 			}										
 		}
 		
 		// Diagnostic logging.
-		if($this->auth_result_m != ROCKY_ACCESS_LOGIN_RESULT::NO_INPUT)
+		if($this->auth_result_m != ACCESS_LOGIN_RESULT::NO_INPUT)
 		{
 			$this->record_login();
 		}
@@ -397,14 +400,14 @@ class rocky_class_access {
 		// Take action based on result of login attempt.
 		switch($this->auth_result_m)
 		{				
-			case ROCKY_ACCESS_LOGIN_RESULT::LOCAL:      			
-			case ROCKY_ACCESS_LOGIN_RESULT::LDAP:			
+			case ACCESS_LOGIN_RESULT::LOCAL:      			
+			case ACCESS_LOGIN_RESULT::LDAP:			
 			
 				// Record client information information into session.
-				$_SESSION[ROCKY_ACCESS_SES_KEY::ACCOUNT] 	= $this->account_m;						
-				$_SESSION[ROCKY_ACCESS_SES_KEY::NAME_F] 	= $this->name_f_m;
-				$_SESSION[ROCKY_ACCESS_SES_KEY::NAME_L] 	= $this->name_l_m;					
-				$_SESSION[ROCKY_ACCESS_SES_KEY::EMAIL] 	= $this->email_m;				
+				$_SESSION[ACCESS_SES_KEY::ACCOUNT] 	= $this->account_m;						
+				$_SESSION[ACCESS_SES_KEY::NAME_F] 	= $this->name_f_m;
+				$_SESSION[ACCESS_SES_KEY::NAME_L] 	= $this->name_l_m;					
+				$_SESSION[ACCESS_SES_KEY::EMAIL] 	= $this->email_m;				
 				
 				// Set dialog.
 				$this->dialog_m = '<span class="text-success">Hello '.$this->name_f_m.', your log in was successful.';
@@ -424,12 +427,12 @@ class rocky_class_access {
 				
 				break;
 			
-			case ROCKY_ACCESS_LOGIN_RESULT::NO_BIND:
+			case ACCESS_LOGIN_RESULT::NO_BIND:
 			
 				$this->dialog_m	.= '<span class="text-danger">Bad user name or password.';
 				break;			
 			
-			case ROCKY_ACCESS_LOGIN_RESULT::NO_INPUT:
+			case ACCESS_LOGIN_RESULT::NO_INPUT:
 			default: 				
 			
 				// Default log in dialog.
@@ -462,8 +465,8 @@ class rocky_class_access {
 		$prefix 	= NULL;		//Singular prefix value taken from array.
 		$ldap 		= NULL;
 		
-		$ldap = ldap_connect(ROCKY_ACCESS_SETTINGS::LDAP_HOST_NEW);
-		if(!$ldap) trigger_error("Cannot connect to LDAP: ".ROCKY_ACCESS_SETTINGS::LDAP_HOST_NEW, E_USER_ERROR);
+		$ldap = ldap_connect(ACCESS_SETTINGS::LDAP_HOST_NEW);
+		if(!$ldap) trigger_error("Cannot connect to LDAP: ".ACCESS_SETTINGS::LDAP_HOST_NEW, E_USER_ERROR);
 								
 		ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 		
@@ -501,9 +504,9 @@ class rocky_class_access {
 		
 		mysqli_report(MYSQLI_REPORT_ALL);
 		
-		if(ROCKY_ACCESS_SETTINGS::DIAGNOSTIC_MAIL == TRUE) $this->mail_alert();
+		if(ACCESS_SETTINGS::DIAGNOSTIC_MAIL == TRUE) $this->mail_alert();
 		
-		if(ROCKY_ACCESS_SETTINGS::DIAGNOSTIC == TRUE)
+		if(ACCESS_SETTINGS::DIAGNOSTIC == TRUE)
 		{
 			try
 			{	

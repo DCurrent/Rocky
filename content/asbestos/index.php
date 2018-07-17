@@ -11,7 +11,7 @@
 
 	// Set up database.
 		$db_conn_set = new class_db_connect_params();
-		$db_conn_set->set_name(ROCKY_DATABASE::NAME);
+		$db_conn_set->set_name(DATABASE::NAME);
 		//$db_conn_set->set_user('ehsinfo_public');
 		//$db_conn_set->set_password('eh$inf0');
 		

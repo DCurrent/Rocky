@@ -13,7 +13,7 @@
 		
 		public function __construct()
 		{
-			$this->directory_prime 	= ROCKY_APPLICATION_SETTINGS::DIRECTORY_PRIME;
+			$this->directory_prime 	= APPLICATION_SETTINGS::DIRECTORY_PRIME;
 			$this->access_obj		= new rocky_class_access();
 		}
 		
@@ -61,7 +61,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>                        
                         </button>
-                        <a class="navbar-brand" href="<?php echo $this->directory_prime; ?>"><?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?></a>
+                        <a class="navbar-brand" href="<?php echo $this->directory_prime; ?>"><?php echo APPLICATION_SETTINGS::NAME; ?></a>
                     </div>
                     <div class="collapse navbar-collapse" id="nav_main">
                         <ul class="nav navbar-nav">
@@ -79,13 +79,13 @@
 							if($this->access_obj->get_account())
 							{
 						?>
-                        		<li><a href="<?php echo ROCKY_ACCESS_SETTINGS::AUTHENTICATE_URL; ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->get_name_full(); ?></a></li>
+                        		<li><a href="<?php echo ACCESS_SETTINGS::AUTHENTICATE_URL; ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->get_name_full(); ?></a></li>
                         <?php
 							}
 							else
 							{
 						?>
-                        		<li><a href="<?php echo ROCKY_ACCESS_SETTINGS::AUTHENTICATE_URL; ?>"><span class="glyphicon glyphicon-log-in"></span> Guest</a></li>
+                        		<li><a href="<?php echo ACCESS_SETTINGS::AUTHENTICATE_URL; ?>"><span class="glyphicon glyphicon-log-in"></span> Guest</a></li>
                         <?php
 							}
 						?>                   
@@ -114,7 +114,7 @@
                 <ul class="list-inline">                       
                     <li>
                     	<ul class="list-unstyled text-muted small" style="margin-bottom:10px;">
-                        	<li><?php echo ROCKY_APPLICATION_SETTINGS::NAME; ?> Ver <?php echo ROCKY_APPLICATION_SETTINGS::VERSION; ?></li>   
+                        	<li><?php echo APPLICATION_SETTINGS::NAME; ?> Ver <?php echo APPLICATION_SETTINGS::VERSION; ?></li>   
                         	<li>Developed by: <a href="mailto:dvcask2@uky.edu"><span class="glyphicon glyphicon-envelope"></span> Damon V. Caskey</a></li>
                             <li>Copyright &copy; <?php echo date("Y"); ?>, University of Kentucky</li>
                             <li>Last update: 
