@@ -91,7 +91,7 @@
 				?>
                 		<p>Welcome to <?php echo APPLICATION_SETTINGS::NAME; ?>. In order to use <?php echo APPLICATION_SETTINGS::NAME; ?>, please log in using your <a href="#" data-toggle="modal" data-target="#help_link_blue">Link Blue</a> account and password.</p>
             		
-                    	<p><?php echo $access_obj->get_dialog(); ?></p>
+                    	<p><?php echo $access_obj->dialog(); ?></p>
                     	
                         <!--Note: PHP self is nessesary to override any link vars.-->
                         <form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
