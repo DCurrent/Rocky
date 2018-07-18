@@ -29,10 +29,14 @@
 	$url_query->set_url_base($_SERVER['PHP_SELF']);
 	$url_query->set_data('action', $obj_navigation_rec->get_action());
 	$url_query->set_data('id', $obj_navigation_rec->get_id());
-				
+
 	// User access.
-	$obj_access = new rocky_class_access();
-	$obj_access->access_verify($url_query->return_url());
+	$access_obj = new \dc\stoeckl\status();
+	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+	$access_obj->set_redirect($url_query->return_url());
+		
+	$access_obj->verify();
+	$access_obj->action();
 		
 	// Initialize our data objects. This is just in case there is no table
 	// data for any of the navigation queries to find, we are making new
