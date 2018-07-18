@@ -4,6 +4,11 @@
 	require(__DIR__.'/source/main.php');
 	
 	//$page_obj = new class_page_cache();
+
+	$access_obj_process = new \dc\stoeckl\process();
+	$access_obj_process->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+	$access_obj_process->get_config()->set_use_local(FALSE);
+	$access_obj_process->process_control();
 	
 	//Get and verify log in status.
 	$access_obj = new \dc\stoeckl\status();
@@ -97,14 +102,14 @@
                         <form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <div class="form-group">
                                 <label for="email">Account:</label>
-                                <input type="text" class="form-control" name="auth_account" id="account" required>
+                                <input type="text" class="form-control" name="account" id="account" required>
                             </div>
                             <div class="form-group">
                                 <label for="pwd">Password:</label>
-                                <input type="password" class="form-control" name="auth_password" id="password" required>
+                                <input type="password" class="form-control" name="credential" id="credential" required>
                             </div>
                             
-                            <button type="submit" name="auth_login" value="<?php echo TRUE; ?>" class="btn btn-default"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+                            <button type="submit" name="access_action" value="<?php echo \dc\stoeckl\ACTION::LOGIN; ?>" class="btn btn-default"><span class="glyphicon glyphicon-log-in"></span> Login</button>
                         </form>
             
                 <?php
