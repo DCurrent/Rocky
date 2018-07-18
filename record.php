@@ -26,10 +26,14 @@
 	// Prepare redirect url with variables.
 		$url_query	= new url_query;	
 		$url_query->set_data('id', $obj_navigation_rec->get_id());
-	
-	// User access.
-		$access_obj = new rocky_class_access();
-		$access_obj->access_verify($url_query->return_url());	
+
+	// Access control.
+		$access_obj = new \dc\stoeckl\status();
+		$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+		$access_obj->set_redirect($url_query->return_url());
+		
+		$access_obj->verify();
+		$access_obj->action();
 		
 	// Set up database.
 		$db_conn_set = new class_db_connect_params();
