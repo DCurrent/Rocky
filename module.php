@@ -272,7 +272,7 @@
         <script src="source/bootstrap/script.js"></script>
         
         <!-- Place inside the <head> of your HTML -->
-		<script type="text/javascript" src="source/tinymce/tinymce.js"></script>
+		<script type="text/javascript" src="source/tinymce/tinymce.min.js"></script>
         <script type="text/javascript">
         tinymce.init({
             selector: ".wysiwyg",
