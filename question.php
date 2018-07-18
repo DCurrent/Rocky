@@ -33,8 +33,12 @@
 	$url_query->set_data('id', $obj_navigation_rec->get_id());
 				
 	// User access.
-	$obj_access = new rocky_class_access();
-	$obj_access->access_verify($url_query->return_url_encoded());
+	$access_obj = new \dc\stoeckl\status();
+	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+	$access_obj->set_redirect($url_query->return_url_encoded());
+		
+	$access_obj->verify();
+	$access_obj->action();
 	
 	// If no module is selected, direct to module listing.
 	if($obj_navigation_rec->get_fk_id() == NULL)
