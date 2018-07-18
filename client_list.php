@@ -2,9 +2,12 @@
 		
 	require(__DIR__.'/source/main.php');
 	
-	$obj_access = new rocky_class_access();
+	// User access.
+	$access_obj = new \dc\stoeckl\status();
+	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
 		
-	$obj_access->access_verify();
+	$access_obj->verify();
+	$access_obj->action();
 	
 	// Start page cache.
 	$page_obj = new class_page_cache();
