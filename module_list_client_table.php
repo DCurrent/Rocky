@@ -2,9 +2,7 @@
 		
 	require(__DIR__.'/source/main.php');
 	
-	//$obj_access = new rocky_class_access();
-		
-	//$obj_access->access_verify();
+	// Access control here.
 	
 	// Start page cache.
 	$page_obj = new class_page_cache();
