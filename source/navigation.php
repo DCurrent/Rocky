@@ -1,6 +1,6 @@
 <?php
 
-	require(__DIR__.'/settings.php');
+	require_once(__DIR__.'/main.php');
 
 	class class_navigation
 	{
@@ -14,7 +14,9 @@
 		public function __construct()
 		{
 			$this->directory_prime 	= APPLICATION_SETTINGS::DIRECTORY_PRIME;
-			$this->access_obj		= new rocky_class_access();
+			$this->access_obj		= new \dc\stoeckl\status();
+			
+			$this->access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
 		}
 		
 		public function get_directory_local()
@@ -79,13 +81,13 @@
 							if($this->access_obj->get_account())
 							{
 						?>
-                        		<li><a href="<?php echo ACCESS_SETTINGS::AUTHENTICATE_URL; ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->get_name_full(); ?></a></li>
+                        		<li><a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->get_name_full(); ?></a></li>
                         <?php
 							}
 							else
 							{
 						?>
-                        		<li><a href="<?php echo ACCESS_SETTINGS::AUTHENTICATE_URL; ?>"><span class="glyphicon glyphicon-log-in"></span> Guest</a></li>
+                        		<li><a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>"><span class="glyphicon glyphicon-log-in"></span> Guest</a></li>
                         <?php
 							}
 						?>                   
