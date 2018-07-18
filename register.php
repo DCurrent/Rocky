@@ -27,10 +27,6 @@
 	// Prepare redirect url with variables.
 		$url_query	= new url_query;	
 		$url_query->set_data('id', $obj_navigation_rec->get_id());
-	
-	// User access.
-		$access_obj = new rocky_class_access();
-		$access_obj->access_verify($url_query->return_url());
 
 	// Access control.
 		$access_obj = new \dc\stoeckl\status();
