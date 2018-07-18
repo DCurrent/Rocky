@@ -18,9 +18,13 @@
 		$db = new class_db_connection($db_conn_set);
 		$query = new class_db_query($db);
 
-	// User access.
-		$access_obj = new rocky_class_access();
-		$access_obj->access_verify($url_query->return_url());
+	// Access control.
+		$access_obj = new \dc\stoeckl\status();
+		$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+		$access_obj->set_redirect($url_query->return_url());
+		
+		$access_obj->verify();
+		$access_obj->action();
 	
 		$_SESSION['rocky_ses_key_class_id'] 	= $class_id;
 		$_SESSION['rocky_ses_key_class_url'] 	= $class_url;
