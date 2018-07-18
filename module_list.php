@@ -2,7 +2,7 @@
 		
 	require(__DIR__.'/source/main.php');
 
-	// User access.
+	// Access control.
 	$access_obj = new \dc\stoeckl\status();
 	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
 		
