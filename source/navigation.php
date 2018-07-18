@@ -81,7 +81,7 @@
 							if($this->access_obj->get_account())
 							{
 						?>
-                        		<li><a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->get_name_full(); ?></a></li>
+                        		<li><a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->name_full(); ?></a></li>
                         <?php
 							}
 							else
