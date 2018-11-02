@@ -131,8 +131,8 @@
 						$_main_data->get_feedback_incorrect(),
 						$_main_data->get_text(),						
 						date(DATE_ATOM),
-						$obj_access->get_account(),
-						$obj_access->get_ip());
+						$access_obj->get_account(),
+						$access_obj->get_ip());
 			
 			$query->set_params($params);			
 			$query->query();
@@ -159,8 +159,8 @@
 				$params = array(array($_main_data->get_id(), 			SQLSRV_PARAM_IN),
 								array($_obj_data_sub_request->xml(), 	SQLSRV_PARAM_IN),
 								array(date(DATE_ATOM), 					SQLSRV_PARAM_IN),
-								array($obj_access->get_account(),		SQLSRV_PARAM_IN),
-								array($obj_access->get_ip(), 			SQLSRV_PARAM_IN));
+								array($access_obj->get_account(),		SQLSRV_PARAM_IN),
+								array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 				
 				$query->set_params($params);			
 							
@@ -480,7 +480,7 @@
                                             			name	="sub_answer_correct"
                                                         id		="sub_answer_correct_<?php echo $_obj_data_sub->get_id(); ?>" 
                                             			value	="<?php echo $_obj_data_sub->get_id(); ?>"                                            
-                                            			<?php if($_obj_data_sub->get_correct() == TRUE) echo ' checked ';?>>
+                                            			<?php if($_obj_data_sub->get_correct() == TRUE) echo ' checked ';?> />
                                                 </td>
                                                 
                                                 <td>                                               
@@ -569,7 +569,7 @@
 					+'</td>'
 					
 					+'<td>'
-						+'<input type="radio" name="sub_answer_correct"	id="sub_answer_correct_' + $temp_int +'" value="">'
+						+'<input type="radio" name="sub_answer_correct"	id="sub_answer_correct_' + $temp_int +'" value="" />'
 					+'</td>'
 					
 					+'<td>'                                               

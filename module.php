@@ -167,8 +167,8 @@
 						$_main_data->get_question_order(),
 						$_main_data->get_question_quantity(),
 						date(DATE_ATOM),
-						$obj_access->get_account(),
-						$obj_access->get_ip());
+						$access_obj->get_account(),
+						$access_obj->get_ip());
 			
 			$query->set_params($params);			
 			$query->query();

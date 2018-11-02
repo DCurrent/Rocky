@@ -48,7 +48,7 @@
 				// Correct is a radio button, which returns nothing if not checked. 
 				// We'll cover for that here to avoid non existing key warnings.
 				$correct = FALSE;				
-				if($this->correct === $id)
+				if($this->correct == $id)
 				{
 					$correct = TRUE;
 				}
