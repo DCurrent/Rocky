@@ -329,7 +329,23 @@
            		<?php echo $obj_navigation_rec->get_markup(); ?>  
             
             	<p>
-                	<a href="question_list.php?fk_id=<?php echo $obj_navigation_rec->get_id(); ?>" class="btn btn-info btn-block" title="Click here to view, and, or edit questions for this training module.">View / Edit Questions</a>
+					<?php if($obj_navigation_rec->get_id() == -1)
+					{
+					?>
+					
+					<a href="#" class="btn btn-info btn-block disabled" aria-disabled="true" title="Click here to view, and, or edit questions for this training module.">Questions</a>
+					
+					<?php
+					}
+					else
+					{
+					?>
+                	
+					<a href="question_list.php?fk_id=<?php echo $obj_navigation_rec->get_id(); ?>" class="btn btn-info btn-block" title="Click here to view, and, or edit questions for this training module.">Questions</a>
+					
+					<?php
+					}
+					?>
                 </p>
                 
                 <div class="form-group">
