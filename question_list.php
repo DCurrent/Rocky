@@ -90,10 +90,60 @@
                 <p>List of available training questions.</p>
             </div>
             
-            <a href="module.php?id=<?php echo $obj_navigation_rec->get_fk_id(); ?>" class="btn btn-info btn-block" title="Click here to return to the module screen.">Back to Module</a>
-            
-            <a href="question.php?id=<?php echo DB_DEFAULTS::NEW_ID; ?>&fk_id=<?php echo $obj_navigation_rec->get_fk_id(); ?>&amp;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK; ?>" class="btn btn-success btn-block" title="Click here to start entering a new question."><span class="glyphicon glyphicon-plus"></span> New Question</a>
+            <a href="module.php?id=<?php echo $obj_navigation_rec->get_fk_id(); ?>" class="btn btn-info btn-block" title="Click here to return to the module screen.">Back to Module</a><br>           
           
+			<?php
+				// Clickable rows. Clicking on table rows
+				// should take user to a detail page for the
+				// record in that row. To do this we first get
+				// the base name of this file, and remove "list".
+				// 
+				// The detail file will always have same name 
+				// without "list". Example: area.php, area_list.php
+				//
+				// Once we have the base name, we can use script to
+				// make table rows clickable by class selector
+				// and passing a completed URL (see the <tr> in
+				// data table we are making clickable).
+				//
+				// Just to ease in development, we verify the detail
+				// file exists before we actually include the script
+				// and build a complete URL string. That way if the
+				// detail file is not yet built, clicking on a table
+				// row does nothing at all instead of giving the end
+				// user an ugly 404 error.
+				//
+				// Lastly, if the base name exists we also build a 
+				// "new item" button that takes user directly
+				// to detail page with a blank record.	
+			 
+				$target_url 	= '#';
+				$target_name	= basename(__FILE__, '_list.php').'.php';
+				$target_file	= __DIR__.'/'.$target_name;				
+				
+				// Does the file exisit? If so we can
+				// use the URL, script, and new 
+				// item button.
+				if(file_exists($target_file))
+				{
+					$target_url = $target_name.'?fk_id='.$obj_navigation_rec->get_fk_id();
+				?>
+                	<script>
+						// Clickable table row.
+						jQuery(document).ready(function($) {
+							$(".clickable-row").click(function() {
+								window.document.location = '<?php echo $target_url; ?>&id=' + $(this).data("href");
+							});
+						});
+					</script>
+                    
+                    <a href="<?php echo $target_url; ?>&amp;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block" title="Click here to start entering a new item."><span class="glyphicon glyphicon-plus"></span> <?php //echo LOCAL_BASE_TITLE; ?></a>
+                <?php
+				}
+				
+			?>
+			
+			
             <!--div class="table-responsive"-->
                 <table class="table table-striped table-hover">
                     <caption></caption>
@@ -115,15 +165,10 @@
 								{						
 									$_obj_data_main = $_obj_data_main_list->current();
                             ?>
-                                        <tr>
+                                        <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
                                             <td><?php echo $_obj_data_main->get_text(); ?></td>
                                             <td><?php if(is_object($_obj_data_main->get_log_create()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_create()->getTimestamp()); ?></td>
-											<td><?php if(is_object($_obj_data_main->get_log_update()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_update()->getTimestamp()); ?></td>
-
-                                            <td><a	href		="question.php?id=<?php echo $_obj_data_main->get_id(); ?>&fk_id=<?php echo $obj_navigation_rec->get_fk_id(); ?>" 
-                                            class		="btn btn-info"
-                                            title		="View details or edit this item."
-                                            ><span class="glyphicon glyphicon-eye-open"></span></a></td>
+											<td><?php if(is_object($_obj_data_main->get_log_update()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_update()->getTimestamp()); ?></td>                                            
                                         </tr>                                    
                             <?php								
                             	}
