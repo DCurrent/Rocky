@@ -49,11 +49,22 @@
 				// We'll cover for that here to avoid non existing key warnings.
 				$correct = FALSE;
 				
-				echo '$this->correct '.$this->correct;
+				echo '$id '.$id.PHP_EOL;
+				echo '$this->correct '.$this->correct.PHP_EOL;
 				
 				if($this->correct == $id)
 				{
 					$correct = TRUE;
+				}
+				
+				// If we're sent temp id (proably a fake guid), this 
+				// is a new record. Send new ID (ID in format database 
+				// uses for ID but with a value that is impossible 
+				// for any record to have) on to the database. The 
+				// database will then give record a correct ID.
+				if(!is_numeric($id))
+				{
+					$id = -1;
 				}
 										
 				$result .= '<row id="'.$id.'">';
@@ -64,6 +75,8 @@
 			}
 			
 			$result .= '</root>';
+			
+			echo $result;
 			
 			return $result;
 		}
