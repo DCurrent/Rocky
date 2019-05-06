@@ -551,7 +551,7 @@
 </script>
 
 	<script>
-		 var $temp_int = 0;
+		var $temp_int = 0;
 		 
 		function deleteRowsub(row)
 		{
@@ -569,7 +569,7 @@
 					+'</td>'
 					
 					+'<td>'
-						+'<input type="radio" name="sub_answer_correct"	id="sub_answer_correct_' + $temp_int +'" value="" />'
+						+'<input type="radio" name="sub_answer_correct"	id="sub_answer_correct_' + $temp_int +'" value="' + $temp_int + '" />'
 					+'</td>'
 					
 					+'<td>'                                               
@@ -577,7 +577,7 @@
 					+'</td>'
 																  
 					+'<td>'													
-						+'<input type="hidden" name="sub_answer_id[]" id="sub_answer_id_' + $temp_int + '" value="" />'
+						+'<input type="hidden" name="sub_answer_id[]" id="sub_answer_id_' + $temp_int + '" value="' + $temp_int + '" />'
 							
 						+'<button type="button"	class="btn btn-danger btn-sm" name="row_add" id	="row_del_' + $temp_int + '" onclick="deleteRowsub(this)"><span class="glyphicon glyphicon-minus"></span></button>'        
 					+'</td>'

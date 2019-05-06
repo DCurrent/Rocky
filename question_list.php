@@ -92,7 +92,7 @@
             
             <a href="module.php?id=<?php echo $obj_navigation_rec->get_fk_id(); ?>" class="btn btn-info btn-block" title="Click here to return to the module screen.">Back to Module</a>
             
-            <a href="question.php?fk_id=<?php echo $obj_navigation_rec->get_fk_id(); ?>&amp;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK; ?>" class="btn btn-success btn-block" title="Click here to start entering a new question."><span class="glyphicon glyphicon-plus"></span> New Question</a>
+            <a href="question.php?id=<?php echo DB_DEFAULTS::NEW_ID; ?>&fk_id=<?php echo $obj_navigation_rec->get_fk_id(); ?>&amp;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK; ?>" class="btn btn-success btn-block" title="Click here to start entering a new question."><span class="glyphicon glyphicon-plus"></span> New Question</a>
           
             <!--div class="table-responsive"-->
                 <table class="table table-striped table-hover">
