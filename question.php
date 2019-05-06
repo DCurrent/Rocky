@@ -550,9 +550,8 @@
 });
 </script>
 
-	<script>
-		var $temp_int = 0;
-		 
+	<script src="source/dc_guid/dc_guid.js"></script>
+	<script>				 
 		function deleteRowsub(row)
 		{
 			var i=row.parentNode.parentNode.rowIndex;
@@ -561,29 +560,30 @@
 		
 		// Inserts a new table row on user request.
 		function insRow()
-		{						
+		{
+			var $temp_guid = dc_guid();
+			
 			$(".answer").append(				
-				'<tr>'
-					+'<td>'                                                    	
-					+	'<input	type="text" name="sub_answer_value[]" id="sub_answer_value_' + $temp_int + '" class	="form-control" value="" />'
+				'\n\n<tr>'
+					+'\n\t<td>'                                                    	
+					+	'<input	type="text" name="sub_answer_value[]" id="sub_answer_value_' + $temp_guid + '" class	="form-control" value="" />'
 					+'</td>'
 					
-					+'<td>'
-						+'<input type="radio" name="sub_answer_correct"	id="sub_answer_correct_' + $temp_int +'" value="' + $temp_int + '" />'
+					+'\n\t<td>'
+						+'<input type="radio" name="sub_answer_correct"	id="sub_answer_correct_' + $temp_guid +'" value="' + $temp_guid + '" />'
 					+'</td>'
 					
-					+'<td>'                                               
-						+'<textarea class="form-control" rows="2" name="sub_answer_text[]" id="sub_answer_text_' + $temp_int + '"></textarea>'
+					+'\n\t<td>'                                               
+						+'<textarea class="form-control" rows="2" name="sub_answer_text[]" id="sub_answer_text_' + $temp_guid + '"></textarea>'
 					+'</td>'
 																  
-					+'<td>'													
-						+'<input type="hidden" name="sub_answer_id[]" id="sub_answer_id_' + $temp_int + '" value="' + $temp_int + '" />'
+					+'\n\t<td>'													
+						+'<input type="hidden" name="sub_answer_id[]" id="sub_answer_id_' + $temp_guid + '" value="' + $temp_guid + '" />'
 							
-						+'<button type="button"	class="btn btn-danger btn-sm" name="row_add" id	="row_del_' + $temp_int + '" onclick="deleteRowsub(this)"><span class="glyphicon glyphicon-minus"></span></button>'        
+						+'<button type="button"	class="btn btn-danger btn-sm" name="row_add" id	="row_del_' + $temp_guid + '" onclick="deleteRowsub(this)"><span class="glyphicon glyphicon-minus"></span></button>'        
 					+'</td>'
-				+'</tr>');
-					
-			$temp_int++;
+				+'\n</tr>');				
+			
 		}		 
 	</script>
 </body>
