@@ -3,7 +3,7 @@
 	abstract class APPLICATION_SETTINGS
 	{
 		const VERSION 		= '1.0.1';
-		const NAME			= 'EHS Training';
+		const NAME			= 'Rocky';
 		const ADMINS		= 'dwhibb0, dvcask2';
 		const ADMIN_MAIN 	= 'dvcask2';
 		const AUTHENTICATE_URL = 'https://ehs.uky.edu/apps/rocky';
