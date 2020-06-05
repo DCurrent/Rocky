@@ -55,46 +55,45 @@
 		?>
         	
         
-            <nav class="navbar">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav_main">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>                        
-                        </button>
-                        <a class="navbar-brand" href="<?php echo $this->directory_prime; ?>"><?php echo APPLICATION_SETTINGS::NAME; ?></a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="nav_main">
-                        <ul class="nav navbar-nav">
-                            <!--<li class="active"><a href="#">Home</a></li>-->
-                            <li class="dropdown">
-                                <a class="dropdown-toggle <?php echo $class_add; ?>" data-toggle="dropdown" href="#">Module<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="<?php echo $this->directory_prime; ?>/module_list.php">Module List</a></li>
-                                    
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                        <?php
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a class="navbar-brand" href="<?php echo $this->directory_prime; ?>"><?php echo APPLICATION_SETTINGS::NAME; ?></a>
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Class Modules
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="#">Select a Class Module</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="<?php echo $this->directory_prime; ?>/module_list.php">Module List</a>
+							</div>
+						</li>
+					</ul>
+					<div class="float-right">
+
+						<?php
 							if($this->access_obj->get_account())
 							{
 						?>
-                        		<li><a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->name_full(); ?></a></li>
-                        <?php
+								<a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->name_full(); ?></a>
+						<?php
 							}
 							else
 							{
 						?>
-                        		<li><a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>"><span class="glyphicon glyphicon-log-in"></span> Guest</a></li>
-                        <?php
+								<a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>"><span class="glyphicon glyphicon-log-in"></span> Guest</a>
+						<?php
 							}
-						?>                   
-                        </ul>
-                    </div>
-                </div>
-            </nav>        	
+						?>
+					</div>
+				</div>				
+			</nav>                	
         <?php
 			
 			// Collect contents from cache and then clean it.
@@ -106,36 +105,29 @@
 		
 		public function generate_markup_footer()
 		{
-			// Start output caching.
 			ob_start();
-		?>
-        	
-            <div id="nav_footer" class="container well" style="width:95%; margin-top:20px;">
-            	<a href="//www.uky.edu"><img src="<?php echo $this->directory_prime; ?>/media/uk_logo_1.png" alt="University of Kentucky" style="float:left; margin-top:10px; margin-bottom:5px;"></a>
-                            
-                <ul class="list-inline">                       
-                    <li>
-                    	<ul class="list-unstyled text-muted small" style="margin-bottom:10px;">
-                        	<li><?php echo APPLICATION_SETTINGS::NAME; ?> Ver <?php echo APPLICATION_SETTINGS::VERSION; ?></li>   
-                        	<li>Developed by: <a href="mailto:dvcask2@uky.edu"><span class="glyphicon glyphicon-envelope"></span> Damon V. Caskey</a></li>
-                            <li>Copyright &copy; <?php echo date("Y"); ?>, University of Kentucky</li>
-                            <li>Last update: 
-                                <?php 
-                                echo date(DATE_ATOM, filemtime($_SERVER['SCRIPT_FILENAME']));  
-                                
-                                if (isset($iReqTime)) 
-                                { 
-                                    echo ". Generated in " .round(microtime(true) - $iReqTime,3). " seconds."; 
-                                } 
-                                ?></li>
-                     	</ul>
-                     </li>
-                     <div style="float:right;">
-                        <img src="<?php echo $this->directory_prime; ?>/media/php_logo_1.png" class="img-responsive pull-right" alt="Powered by objected oriented PHP." title="Powered by object oriented PHP." />
-                     </div>
-                </ul>
-            </div><!--#nav_footer-->
-        <?php
+			?>
+			
+			<br><br>
+			<div class="card bg-light">
+				<div class="card-body">
+					
+					<img class="float-right d-none d-sm-inline" src="<?php echo $this->directory_prime; ?>/media/php_logo_1.png" class="img-responsive pull-right .d-sm-none" alt="Powered by objected oriented PHP." title="Powered by object oriented PHP." />
+					
+					<img class="float-left d-none d-sm-inline" style="margin-right: 15px; width: 100px" src="<?php echo $this->directory_prime; ?>/media/uk_logo_1.png" class="img-responsive pull-right .d-sm-none" alt="Powered by objected oriented PHP." title="Powered by object oriented PHP." />
+					
+					<span class="text-muted small"><?php echo APPLICATION_SETTINGS::NAME; ?> Ver <?php echo APPLICATION_SETTINGS::VERSION; ?></span>
+					<br>
+					<span class="text-muted small">Developed by: <a href="mailto:dvcask2@uky.edu"><span class="glyphicon glyphicon-envelope"></span> Caskey, Damon V.</a></span>
+					<br>
+					<span class="text-muted small">Copyright &copy; <?php echo date("Y"); ?>, University of Kentucky.</span>
+					<br>
+				</div>
+			</div>
+					
+
+			
+			<?php
 			// Collect contents from cache and then clean it.
 			$this->markup_footer = ob_get_contents();
 			ob_end_clean();
