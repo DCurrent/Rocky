@@ -2,6 +2,35 @@
 		
 	require(__DIR__.'/source/main.php');
 
+	function limitStrlen($input, $length, $ellipses = true, $strip_html = true) 
+	{
+		
+		//strip tags, if desired
+		if ($strip_html) {
+			$input = strip_tags($input);
+		}
+
+		//no need to trim, already shorter than trim length
+		if (strlen($input) <= $length) {
+			return $input;
+		}
+
+		//find last space within length
+		$last_space = strrpos(substr($input, 0, $length), ' ');
+		if($last_space !== false) {
+			$trimmed_text = substr($input, 0, $last_space);
+		} else {
+			$trimmed_text = substr($input, 0, $length);
+		}
+		//add ellipses (...)
+		if ($ellipses) {
+			$trimmed_text .= '...';
+		}
+
+		return $trimmed_text;
+	}
+
+
 	// Access control.
 	$access_obj = new \dc\stoeckl\status();
 	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
@@ -27,7 +56,9 @@
 	$db = new class_db_connection($db_conn_set);
 	$query = new class_db_query($db);
 		
-	$paging = new class_paging;	
+	$paging_config = new dc\record_navigation\PagingConfig;
+	$paging_config->set_url_query_instance(new dc\url_query\URLQuery);
+	$paging = new dc\record_navigation\Paging($paging_config);
 	
 	$query->set_sql('{call module_list(@page_current 		= ?,														 
 										@page_rows 			= ?,
@@ -125,7 +156,15 @@
 			}
 			?>
 			
+			<br>
+			
+			<?php
+				echo $paging->generate_paging_markup();
+			?>		
             
+			<br>
+			<br>
+			
 			<table class="table table-striped table-hover">
 				<caption></caption>
 				<thead>
@@ -145,10 +184,15 @@
 							for($_obj_data_main_list->rewind(); $_obj_data_main_list->valid(); $_obj_data_main_list->next())
 							{						
 								$_obj_data_main = $_obj_data_main_list->current();
+								
+								
+								// Let's keep the the intro within reason.
+								$intro = limitStrlen($_obj_data_main->get_intro(), 47, true, false);
+								
 						?>
 									<tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
 										<td><?php echo $_obj_data_main->get_desc_title(); ?></td>
-										<td><?php echo $_obj_data_main->get_intro(); ?></td>
+										<td><?php echo $intro; ?></td>
 										<td><?php if(is_object($_obj_data_main->get_log_create()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_create()->getTimestamp()); ?></td>
 										<td><?php if(is_object($_obj_data_main->get_log_update()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_update()->getTimestamp()); ?></td>
 									</tr>                                    
@@ -166,11 +210,12 @@
 			?>
 			
 				<a href="<?php echo $target_url; ?>&#63;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block font-weight-bold" title="Click here to start entering a new item.">&#43; New Module</a>
-			
+				
+				<br>
 			<?php
 			}
 			
-				echo $paging->generate_paging_markup();
+				echo $paging->get_markup();
 				echo $navigation_obj->get_markup_footer(); 
 			?>
         </div><!--container-->        
