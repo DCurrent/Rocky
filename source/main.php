@@ -8,7 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/libraries/php/classes/session.php');					// Session class.
 	require_once($_SERVER['DOCUMENT_ROOT'].'/libraries/php/classes/database/main.php'); 			// Database class.
 	require_once($_SERVER['DOCUMENT_ROOT'].'/libraries/php/classes/record_navigation/main.php');	// Record navigation.
-	require_once($_SERVER['DOCUMENT_ROOT'].'/libraries/php/classes/sorting/main.php'); 				// record sorting.
+	//require_once($_SERVER['DOCUMENT_ROOT'].'/libraries/php/classes/sorting/main.php'); 				// record sorting.
 	require(__DIR__.'/dc/cache/main.php'); 		// Page cache.
 
 	require_once(__DIR__.'/navigation.php');
@@ -53,11 +53,11 @@
 		{
             require($file_name_full);
 			
-        	//echo $file_name_full.', loaded successfully. -->'.PHP_EOL;
+        	echo $file_name_full.', loaded successfully. -->'.PHP_EOL;
 		} 
 		else 
 		{
-            //echo '<-- '.$file_name_full.' not found. -->'.PHP_EOL;
+            echo '<-- '.$file_name_full.' not found. -->'.PHP_EOL;
         }
     }
 	
