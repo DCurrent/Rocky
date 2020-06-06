@@ -51,6 +51,43 @@
 	// Send control data from procedure to paging object.
 	$paging->set_page_last($page_last);
 	$paging->set_row_count_total($row_count);
+
+
+	// Clickable rows. Clicking on table rows
+	// should take user to a detail page for the
+	// record in that row. To do this we first get
+	// the base name of this file, and remove "list".
+	// 
+	// The detail file will always have same name 
+	// without "list". Example: area.php, area_list.php
+	//
+	// Once we have the base name, we can use script to
+	// make table rows clickable by class selector
+	// and passing a completed URL (see the <tr> in
+	// data table we are making clickable).
+	//
+	// Just to ease in development, we verify the detail
+	// file exists before we actually include the script
+	// and build a complete URL string. That way if the
+	// detail file is not yet built, clicking on a table
+	// row does nothing at all instead of giving the end
+	// user an ugly 404 error.
+	//
+	// Lastly, if the base name exists we also build a 
+	// "new item" button that takes user directly
+	// to detail page with a blank record.	
+
+	$target_url 	= '#';
+	$target_name	= basename(__FILE__, '_list.php').'.php';
+	$target_file	= __DIR__.'/'.$target_name;
+	$target_exists 	= file_exists($target_file);
+
+	// If the target file is present, then it becomes
+	// our target URL. 
+	if($target_exists)
+	{
+		$target_url = $target_name;
+	}
 ?>
 
 <!DOCtype html>
@@ -63,6 +100,9 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link rel="stylesheet" href="source/css/style.css" />
         <link rel="stylesheet" href="source/css/print.css" media="print" />
+		
+		
+
     </head>
     
     <body>    
@@ -74,98 +114,92 @@
             </div>           
           
 			<?php
-				// Clickable rows. Clicking on table rows
-				// should take user to a detail page for the
-				// record in that row. To do this we first get
-				// the base name of this file, and remove "list".
-				// 
-				// The detail file will always have same name 
-				// without "list". Example: area.php, area_list.php
-				//
-				// Once we have the base name, we can use script to
-				// make table rows clickable by class selector
-				// and passing a completed URL (see the <tr> in
-				// data table we are making clickable).
-				//
-				// Just to ease in development, we verify the detail
-				// file exists before we actually include the script
-				// and build a complete URL string. That way if the
-				// detail file is not yet built, clicking on a table
-				// row does nothing at all instead of giving the end
-				// user an ugly 404 error.
-				//
-				// Lastly, if the base name exists we also build a 
-				// "new item" button that takes user directly
-				// to detail page with a blank record.	
-			 
-				$target_url 	= '#';
-				$target_name	= basename(__FILE__, '_list.php').'.php';
-				$target_file	= __DIR__.'/'.$target_name;				
-				
-				// Does the file exisit? If so we can
-				// use the URL, script, and new 
-				// item button.
-				if(file_exists($target_file))
-				{
-					$target_url = $target_name;
-				?>
-                	<script>
-						// Clickable table row.
-						jQuery(document).ready(function($) {
-							$(".clickable-row").click(function() {
-								window.document.location = '<?php echo $target_url; ?>?id=' + $(this).data("href");
-							});
-						});
-					</script>
-                    
-                    <a href="<?php echo $target_url; ?>&#63;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block" title="Click here to start entering a new item."><span class="glyphicon glyphicon-plus"></span> <?php //echo LOCAL_BASE_TITLE; ?></a>
-                <?php
-				}
-				
+			// Add record button.
+			if($target_exists)
+			{
 			?>
 			
-            <!--div class="table-responsive"-->
-                <table class="table table-striped table-hover">
-                    <caption></caption>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Intro</th>
-                            <th>Created</th>
-                            <th>Updated</th>
-                            <th><!--Action--></th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                    </tfoot>
-                    <tbody>                        
-                        <?php
-                            if(is_object($_obj_data_main_list) === TRUE)
-							{
-								for($_obj_data_main_list->rewind(); $_obj_data_main_list->valid(); $_obj_data_main_list->next())
-								{						
-									$_obj_data_main = $_obj_data_main_list->current();
-                            ?>
-                                        <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
-                                            <td><?php echo $_obj_data_main->get_desc_title(); ?></td>
-                                            <td><?php echo $_obj_data_main->get_intro(); ?></td>
-                                            <td><?php if(is_object($_obj_data_main->get_log_create()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_create()->getTimestamp()); ?></td>
-											<td><?php if(is_object($_obj_data_main->get_log_update()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_update()->getTimestamp()); ?></td>
-                                        </tr>                                    
-                            <?php								
-                            	}
+				<a href="<?php echo $target_url; ?>&#63;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block font-weight-bold" title="Click here to start entering a new item.">&#43; New Module</a>
+			
+			<?php
+			}
+			?>
+			
+            
+			<table class="table table-striped table-hover">
+				<caption></caption>
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Intro</th>
+						<th>Created</th>
+						<th>Updated</th>
+					</tr>
+				</thead>
+				<tfoot>
+				</tfoot>
+				<tbody>                        
+					<?php
+						if(is_object($_obj_data_main_list) === TRUE)
+						{
+							for($_obj_data_main_list->rewind(); $_obj_data_main_list->valid(); $_obj_data_main_list->next())
+							{						
+								$_obj_data_main = $_obj_data_main_list->current();
+						?>
+									<tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
+										<td><?php echo $_obj_data_main->get_desc_title(); ?></td>
+										<td><?php echo $_obj_data_main->get_intro(); ?></td>
+										<td><?php if(is_object($_obj_data_main->get_log_create()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_create()->getTimestamp()); ?></td>
+										<td><?php if(is_object($_obj_data_main->get_log_update()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_update()->getTimestamp()); ?></td>
+									</tr>                                    
+						<?php								
 							}
-                        ?>
-                    </tbody>                        
-                </table>  
+						}
+					?>
+				</tbody>                        
+			</table>			
             <?php 
+			
+			// Add record button.
+			if($target_exists)
+			{
+			?>
+			
+				<a href="<?php echo $target_url; ?>&#63;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block font-weight-bold" title="Click here to start entering a new item.">&#43; New Module</a>
+			
+			<?php
+			}
+			
 				echo $paging->generate_paging_markup();
 				echo $navigation_obj->get_markup_footer(); 
 			?>
         </div><!--container-->        
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    		
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	
+	<?php
+		
+		// Does the file exisit? If so we can
+		// use the URL, script, and new 
+		// item button.
+		if($target_exists)
+		{
+		?>
+			<script>
+				// Clickable table row.
+				jQuery(document).ready(function($) {
+					$(".clickable-row").click(function() {
+						window.document.location = '<?php echo $target_url; ?>?id=' + $(this).data("href");
+					});
+				});
+			</script>
+		<?php
+		}
+
+	?>
+		
 </body>
 </html>
 
