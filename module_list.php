@@ -150,7 +150,7 @@
 			{
 			?>
 			
-				<a href="<?php echo $target_url; ?>&#63;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block font-weight-bold" title="Click here to start entering a new item.">&#43; New Module</a>
+				<a href="<?php echo $target_url; ?>&#63;nav_command=<?php echo dc\record_navigation\RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block font-weight-bold" title="Click here to start entering a new item.">&#43; New Module</a>
 			
 			<?php
 			}
@@ -209,7 +209,7 @@
 			{
 			?>
 			
-				<a href="<?php echo $target_url; ?>&#63;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block font-weight-bold" title="Click here to start entering a new item.">&#43; New Module</a>
+				<a href="<?php echo $target_url; ?>&#63;nav_command=<?php echo dc\record_navigation\RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block font-weight-bold" title="Click here to start entering a new item.">&#43; New Module</a>
 				
 				<br>
 			<?php
