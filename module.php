@@ -349,8 +349,8 @@
 					?>
                 </p>
                 
-                <div class="form-group">
-                	<label class="control-label col-sm-2" for="created">Created:</label>
+                <div class="form-group row">
+                	<label class="control-label col-sm-2" for="created">Created</label>
                 	<div class="col-sm-10">
                 		<input 
                         	type	="text" 
@@ -362,8 +362,8 @@
                 	</div>
                 </div>
                 
-             	<div class="form-group">       
-                    <label class="control-label col-sm-2" for="last_update">Last Update:</label>
+             	<div class="form-group row">       
+                    <label class="control-label col-sm-2" for="last_update">Last Update</label>
                 	<div class="col-sm-10">
                 		<input 
                         	type	="text" 
@@ -375,15 +375,15 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
-                	<label class="control-label col-sm-2" for="desc_title">Title:</label>
+                <div class="form-group row">
+                	<label class="control-label col-sm-2" for="desc_title">Title</label>
                 	<div class="col-sm-10">
                 		<input type="text" class="form-control"  name="desc_title" id="desc_title" placeholder="Title" value="<?php echo $_main_data->get_desc_title(); ?>" required>
                 	</div>
                 </div>
                                
-                <div class="form-group">
-                	<label class="control-label col-sm-2" for="desc_short">Descriptive Title:</label>
+                <div class="form-group row">
+                	<label class="control-label col-sm-2" for="desc_short">Descriptive Title</label>
                 	<div class="col-sm-10">
                 		<input type			= "text" 
                         		class		= "form-control"  
@@ -394,39 +394,48 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
-                	<label class="control-label col-sm-2" for="">Online Accessibility:</label>
-                	<div class="col-sm-10"> 
-                    		<div class="radio">
-                            	<label><input 
-                                			type	= "radio" 
+                <div class="form-group row">
+                	<label class="control-label col-sm-2" for="">Online Accessibility</label>
+                	<div class="form-check col-sm-10"> 
+                    		<div class="form-check">
+                            	<label class="form-check-label">
+									<input 
+										   	type	= "radio"
+                                			class	= "form-check-input" 
                                             name	= "hidden"
                                             id 		= "hidden_0"
                                             value	= "0"                                   
-											<?php if($_main_data->get_hidden() === 0) echo ' checked ';?>>Open (Listed)</label>
+											<?php if($_main_data->get_hidden() === 0) echo ' checked ';?>>Open (Listed)
+								</label>
                        	 	</div>
                        
-                       		<div class="radio">
-                            	<label><input 
-                                			type	= "radio" 
+                       		<div class="form-check">
+                            	<label class="form-check-label">
+									<input 
+										   	type	= "radio"
+                                			class	= "form-check-input" 
                                             name	= "hidden"
                                             id 		= "hidden_1"
                                             value	= "1"                                   
 											<?php if($_main_data->get_hidden() === 1) echo ' checked ';?>>Open (Unlisted)</label>
                        	 	</div>  
                             
-                            <div class="radio">
-                            	<label><input 
-                                			type	= "radio" 
+                            <div class="form-check">
+                            	<label class="form-check-label">
+									<input 
+										   	type	= "radio"
+                                			class	= "form-check-input" 
                                             name	= "hidden"
                                             id 		= "hidden_2" 
                                             value	= "2"                                   
 											<?php if($_main_data->get_hidden() === 2) echo ' checked ';?>>Whitelist Only</label>
                        	 	</div>  
                             
-                            <div class="radio">
-                            	<label><input 
-                                			type	= "radio" 
+                            <div class="form-check">
+                            	<label class="form-check-label">
+									<input 
+										   	type	= "radio"
+                                			class	= "form-check-input" 
                                             name	= "hidden" 
                                             id 		= "hidden_3"
                                             value	= "3"                                   
@@ -436,21 +445,25 @@
                 	</div>
 				</div>
                 
-                <div class="form-group">
-                	<label class="control-label col-sm-2" for="">Question Order:</label>
+                <div class="form-group row">
+                	<label class="control-label col-sm-2" for="">Question Order</label>
                 	<div class="col-sm-10">    
-                       		<div class="radio">
-                            	<label><input 
+                       		<div class="form-check">
+                            	<label class="form-check-label">
+									<input 
                                 			type	= "radio" 
+										   	class	= "form-check-input"
                                             name	= "question_order"
                                             id 		= "question_order_0"
                                             value	= "0"                                   
 											<?php if($_main_data->get_question_order() == 0) echo ' checked ';?>>Random</label>
                        	 	</div>  
                             
-                            <div class="radio">
-                            	<label><input 
+                            <div class="form-check">
+                            	<label class="form-check-label">
+									<input 
                                 			type	= "radio" 
+											class	= "form-check-input"
                                             name	= "question_order"
                                             id 		= "question_order_1" 
                                             value	= "1"                                   
@@ -460,9 +473,9 @@
                 	</div>
 				</div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "question_quantity">Question Quantity:</label>
+                    		for		= "question_quantity">Question Limit</label>
                             
                 	<div class="col-sm-10">                    
                 		<input type			= "number" 
@@ -471,8 +484,13 @@
                                 id			= "question_quantity"
                                 min			= "0"
                                 max 		= "50"
-                                step 		= "1" 
+                                step 		= "1"
+							   	aria-describedby="question_quantity_help"
                                 value="<?php echo $_main_data->get_question_quantity(); ?>">
+						
+						<small id="question_quantity_help" class="form-text text-muted">
+						  Maximum number of questions presented to user during assessment. If 0, all active questions from pool are presented. 
+						</small>
                 	</div>
                 </div>
                 
