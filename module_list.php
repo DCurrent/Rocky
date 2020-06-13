@@ -2,9 +2,9 @@
 		
 	require(__DIR__.'/source/main.php');
 
+	// Trim string that exceeds length and add "...".
 	function limitStrlen($input, $length, $ellipses = true, $strip_html = true) 
-	{
-		
+	{		
 		//strip tags, if desired
 		if ($strip_html) {
 			$input = strip_tags($input);
