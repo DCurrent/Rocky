@@ -79,7 +79,7 @@
                 <p>List of available training modules.</p>
             </div>
             
-            <a href="role.php?nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK; ?>" class="btn btn-success btn-block" title="Click here to start entering a new role."><span class="glyphicon glyphicon-plus"></span> New module</a>
+            <a href="role.php?nav_command=<?php echo dc\record_navigation\RECORD_NAV_COMMANDS::NEW_BLANK; ?>" class="btn btn-success btn-block" title="Click here to start entering a new role."><span class="glyphicon glyphicon-plus"></span> New module</a>
           
             <!--div class="table-responsive"-->
                 <table class="table table-striped table-hover">

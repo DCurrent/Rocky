@@ -108,24 +108,24 @@
 	{		
 	
 		default:		
-		case RECORD_NAV_COMMANDS::NEW_BLANK:		
+		case dc\record_navigation\RECORD_NAV_COMMANDS::NEW_BLANK:		
 			break;
 			
-		case RECORD_NAV_COMMANDS::NEW_COPY:						
+		case dc\record_navigation\RECORD_NAV_COMMANDS::NEW_COPY:						
 			break;
 			
-		case RECORD_NAV_COMMANDS::LISTING:
+		case dc\record_navigation\RECORD_NAV_COMMANDS::LISTING:
 			break;
 			
-		case RECORD_NAV_COMMANDS::DELETE:
+		case dc\record_navigation\RECORD_NAV_COMMANDS::DELETE:
 			break;				
-		case RECORD_NAV_COMMANDS::SAVE:
+		case dc\record_navigation\RECORD_NAV_COMMANDS::SAVE:
 					
 			// If this is set to false, data is not saved.
 			$valid = TRUE;			
 			
 			// Stop errors in case someone tries a direct command link.
-			if($obj_navigation_rec->get_command() != RECORD_NAV_COMMANDS::SAVE) break;
+			if($obj_navigation_rec->get_command() != dc\record_navigation\RECORD_NAV_COMMANDS::SAVE) break;
 									
 			// Save the record. Saving main record is straight forward. We’ll run the populate method on our 
 			// main data object which will gather up post values. Then we can run a query to merge the values into 

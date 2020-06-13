@@ -241,6 +241,7 @@
 			$field_training_status	= NULL,			
 			$field_uk_status		= NULL,
 			$field_ukid				= NULL,
+			$field_paraquat			= NULL,
 			$field_phone			= NULL,
 			$field_supervisor		= NULL,
 			$hidden					= NULL,			
@@ -331,6 +332,11 @@
 		public function get_field_ukid()
 		{
 			return $this->field_ukid;
+		}
+		
+		public function get_field_paraquat()
+		{
+			return $this->field_paraquat;
 		}
 		
 		public function get_field_phone()
@@ -482,6 +488,11 @@
 		public function set_field_ukid($value)
 		{
 			$this->field_ukid = $value;
+		}
+		
+		public function set_field_paraquat($value)
+		{
+			$this->field_paraquat = $value;
 		}
 		
 		public function set_field_phone($value)

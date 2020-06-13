@@ -59,23 +59,23 @@
 	{		
 	
 		default:		
-		case RECORD_NAV_COMMANDS::NEW_BLANK:
+		case dc\record_navigation\RECORD_NAV_COMMANDS::NEW_BLANK:
 		
 			break;
 			
-		case RECORD_NAV_COMMANDS::NEW_COPY:			
+		case dc\record_navigation\RECORD_NAV_COMMANDS::NEW_COPY:			
 			
 			// Populate the object from post values.			
 			$_main_data->populate_from_request();			
 			break;
 			
-		case RECORD_NAV_COMMANDS::LISTING:
+		case dc\record_navigation\RECORD_NAV_COMMANDS::LISTING:
 			
 			// Direct to listing.				
 			header('Location: module_list.php');
 			break;
 			
-		case RECORD_NAV_COMMANDS::DELETE:						
+		case dc\record_navigation\RECORD_NAV_COMMANDS::DELETE:						
 			
 			// Populate the object from post values.			
 			$_main_data->populate_from_request();
@@ -91,10 +91,10 @@
 				
 			break;				
 					
-		case RECORD_NAV_COMMANDS::SAVE:
+		case dc\record_navigation\RECORD_NAV_COMMANDS::SAVE:
 			
 			// Stop errors in case someone tries a direct command link.
-			if($obj_navigation_rec->get_command() != RECORD_NAV_COMMANDS::SAVE) break;
+			if($obj_navigation_rec->get_command() != dc\record_navigation\RECORD_NAV_COMMANDS::SAVE) break;
 			
 			// Save the record. Saving main record is straight forward. We’ll run the populate method on our 
 			// main data object which will gather up post values. Then we can run a query to merge the values into 

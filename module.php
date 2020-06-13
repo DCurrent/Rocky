@@ -21,7 +21,7 @@
 	$query = new class_db_query($db);		
 			
 	// Record navigation.
-	$obj_navigation_rec = new class_record_nav();	
+	$obj_navigation_rec = new dc\record_navigation\RecordMenu();	
 	
 	// URL request builder.
 	$url_query	= new url_query;
@@ -51,23 +51,23 @@
 	{		
 	
 		default:		
-		case RECORD_NAV_COMMANDS::NEW_BLANK:
+		case dc\record_navigation\RECORD_NAV_COMMANDS::NEW_BLANK:
 		
 			break;
 			
-		case RECORD_NAV_COMMANDS::NEW_COPY:			
+		case dc\record_navigation\RECORD_NAV_COMMANDS::NEW_COPY:			
 			
 			// Populate the object from post values.			
 			$_main_data->populate_from_request();			
 			break;
 			
-		case RECORD_NAV_COMMANDS::LISTING:
+		case dc\record_navigation\RECORD_NAV_COMMANDS::LISTING:
 			
 			// Direct to listing.				
 			header('Location: module_list.php');
 			break;
 			
-		case RECORD_NAV_COMMANDS::DELETE:						
+		case dc\record_navigation\RECORD_NAV_COMMANDS::DELETE:						
 			
 			// Populate the object from post values.			
 			$_main_data->populate_from_request();
@@ -83,10 +83,10 @@
 				
 			break;				
 					
-		case RECORD_NAV_COMMANDS::SAVE:
+		case dc\record_navigation\RECORD_NAV_COMMANDS::SAVE:
 			
 			// Stop errors in case someone tries a direct command link.
-			if($obj_navigation_rec->get_command() != RECORD_NAV_COMMANDS::SAVE) break;
+			if($obj_navigation_rec->get_command() != dc\record_navigation\RECORD_NAV_COMMANDS::SAVE) break;
 			
 			$file_name = NULL;
 						
@@ -129,6 +129,7 @@
 													@field_uk_status		= ?,
 													@field_ukid				= ?,
 													@field_supervisor		= ?,
+													@field_paraquat			= ?,
 													@field_phone			= ?,
 													@hidden					= ?,	
 													@question_order			= ?,	
@@ -162,6 +163,7 @@
 						$_main_data->get_field_uk_status(),
 						$_main_data->get_field_ukid(),
 						$_main_data->get_field_supervisor(),
+						$_main_data->get_field_paraquat(),
 						$_main_data->get_field_phone(),
 						$_main_data->get_hidden(),
 						$_main_data->get_question_order(),
@@ -688,6 +690,12 @@
                                     <label for="field_supervisor">Supervisor</label>
                                 </li>
                                 
+								
+								<li>
+                                    <input name="field_paraquat" id="field_paraquat" value="1" type="checkbox" <?php if($_main_data->get_field_paraquat() == TRUE) echo ' checked '; ?>>
+                                    <label for="field_paraquat">Paraquat Certified</label>
+                                </li>
+								
                                 <li>
                                     <input name="field_phone" id="field_phone" value="1" type="checkbox" <?php if($_main_data->get_field_phone() == TRUE) echo ' checked '; ?>>
                                     <label for="field_phone">Phone</label>

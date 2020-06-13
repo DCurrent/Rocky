@@ -137,7 +137,7 @@
 						});
 					</script>
                     
-                    <a href="<?php echo $target_url; ?>&amp;nav_command=<?php echo RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block" title="Click here to start entering a new item."><span class="glyphicon glyphicon-plus"></span> <?php //echo LOCAL_BASE_TITLE; ?></a>
+                    <a href="<?php echo $target_url; ?>&amp;nav_command=<?php echo dc\record_navigation\RECORD_NAV_COMMANDS::NEW_BLANK;?>&amp;id=<?php echo DB_DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block" title="Click here to start entering a new item."><span class="glyphicon glyphicon-plus"></span> <?php //echo LOCAL_BASE_TITLE; ?></a>
                 <?php
 				}
 				
