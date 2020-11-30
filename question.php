@@ -22,8 +22,11 @@
 	$query = new class_db_query($db);		
 			
 	// Record navigation.
-	$obj_navigation_rec = new class_record_nav();	
-	
+	$obj_navigation_rec = new dc\record_navigation\RecordMenu();	
+
+	//var_dump($obj_navigation_rec);
+	//die();
+
 	// URL request builder.
 	$url_query	= new url_query;
 	
@@ -40,10 +43,10 @@
 	$access_obj->verify();
 	$access_obj->action();
 	
-	// If no module is selected, direct to module listing.
+	// If no individual is selected, direct to  listing.
 	if($obj_navigation_rec->get_fk_id() == NULL)
 	{
-		header('Location: module_list.php');
+		header('Location: question_list.php');
 	}
 	
 	// Initialize our data objects. This is just in case there is no table
@@ -72,7 +75,7 @@
 		case dc\record_navigation\RECORD_NAV_COMMANDS::LISTING:
 			
 			// Direct to listing.				
-			header('Location: module_list.php');
+			header('Location: question_list.php');
 			break;
 			
 		case dc\record_navigation\RECORD_NAV_COMMANDS::DELETE:						
@@ -260,18 +263,17 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo APPLICATION_SETTINGS::NAME; ?>, Question Detail</title>        
+        <title><?php echo APPLICATION_SETTINGS::NAME; ?>, Module Detail</title>        
         
-         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="source/bootstrap/style.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link rel="stylesheet" href="source/css/style.css" />
         <link rel="stylesheet" href="source/css/print.css" media="print" />
-        
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        
-        <!-- Latest compiled JavaScript -->
-        <script src="source/bootstrap/script.js"></script>
+		
+		<!-- Latest minified Javascript -->
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
         
         <!-- Place inside the <head> of your HTML -->
 		<script type="text/javascript" src="source/tinymce/tinymce.min.js"></script>
@@ -312,11 +314,9 @@
 			  border: 1px transparent solid; 
 			  display:inline-block;
 			  width:12em;			  
-			} 
-			
-			
-		
+			}		
 		</style>
+		
     </head>
     
     <body>    
@@ -334,8 +334,8 @@
                 	<a href="question_list.php?fk_id=<?php echo $obj_navigation_rec->get_fk_id(); ?>" class="btn btn-info btn-block" title="Click here to return to the question list screen.">Back to Question List</a>
                 </p>
                 
-                <div class="form-group">
-                	<label class="control-label col-sm-2" for="created">Created:</label>
+              <div class="form-group row">
+                	<label class="control-label col-sm-2" for="created">Created</label>
                 	<div class="col-sm-10">
                 		<input 
                         	type	="text" 
@@ -346,9 +346,21 @@
                             value="<?php if(is_object($_main_data->get_log_create())) echo date(DATE_ATOM, $_main_data->get_log_create()->getTimestamp()); ?>">
                 	</div>
                 </div>
+                <div class="form-group row">
+                  <label 	class	= "control-label col-sm-2" 
+                    		for		= "material_above_head">Title</label>
+                  <div class="col-sm-10">
+                    <input type			= "text" 
+                        		class		= "form-control"  
+                                name		= "title" 
+                                id			= "title" 
+                                placeholder	= "Title of content that appears above introduction." 
+                                value="<?php echo $_main_data->get_title(); ?>">
+                  </div>
+                </div>
                 
-             	<div class="form-group">       
-                    <label class="control-label col-sm-2" for="last_update">Last Update:</label>
+             	<div class="form-group row">       
+                  <label class="control-label col-sm-2" for="last_update">Last Update</label>
                 	<div class="col-sm-10">
                 		<input 
                         	type	="text" 
@@ -358,25 +370,10 @@
                             placeholder="Time record was updated." readonly 
                             value="<?php if(is_object($_main_data->get_log_update())) echo date(DATE_ATOM, $_main_data->get_log_update()->getTimestamp()); ?>">
                 	</div>
-                </div>
-                
-                <div class="form-group">
-                	<label 	class	= "control-label col-sm-2" 
-                    		for		= "material_above_head">Title:</label>
-                            
-                	<div class="col-sm-10">
-                		<input type			= "text" 
-                        		class		= "form-control"  
-                                name		= "title" 
-                                id			= "title" 
-                                placeholder	= "Title of content that appears above introduction." 
-                                value="<?php echo $_main_data->get_title(); ?>">
-                	</div>
-                </div>
-                
-                <div class="form-group">
-                	<label 	class	= "control-label col-sm-2" 
-                    		for		= "notes">Notes:</label>
+              </div>
+<div class="form-group row">
+    <label 	class	= "control-label col-sm-2" 
+                    		for		= "notes">Notes</label>
                 	
                     <div class="col-sm-10">
                     	<textarea	class	= "form-control wysiwyg" 
@@ -384,23 +381,11 @@
                                     name	= "notes" 
                                     id		= "notes"><?php echo $_main_data->get_notes(); ?></textarea>
                 	</div>
-                </div>
+              </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "intro">Introduction:</label>
-                	
-                    <div class="col-sm-10">
-                    	<textarea	class	= "form-control wysiwyg" 
-                        			rows	= "2" 
-                                    name	= "intro" 
-                                    id		= "intro"><?php echo $_main_data->get_intro(); ?></textarea>
-                	</div>
-                </div>
-                
-                <div class="form-group">
-                	<label 	class	= "control-label col-sm-2" 
-                    		for		= "feedback_correct">Feedback (Correct):</label>
+                    		for		= "feedback_correct">Feedback (Correct)</label>
                 	
                     <div class="col-sm-10">
                     	<textarea	class	= "form-control wysiwyg" 
@@ -410,9 +395,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "feedback_incorrect">Feedback (Incorrect):</label>
+                    		for		= "feedback_incorrect">Feedback (Incorrect)</label>
                 	
                     <div class="col-sm-10">
                     	<textarea	class	= "form-control wysiwyg" 
@@ -422,9 +407,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "text">Question Text:</label>
+                    		for		= "text">Text</label>
                 	
                     <div class="col-sm-10">
                     	<textarea	class	= "form-control wysiwyg" 
@@ -435,12 +420,11 @@
                 </div>
                 
                 <!---->
-                <div class="form-group">                    	
-                	<div class="col-sm-offset-2 col-sm-10">
-                        <fieldset>
-                			<legend>Answers</legend>                    
-                            <p>Answers for this question.</p>
-                                                                                   
+                <div class="form-group row"> 
+					<label 	class	= "control-label col-sm-2" 
+                    		>Answers</label>
+                	<div class="col-sm-10">
+                        <fieldset>                                                                                   
                             <table class="table table-striped table-hover" id="POITable"> 
                                 <thead>
                                     <tr>
@@ -503,7 +487,7 @@
 														class 	="btn btn-danger btn-sm" 
 														name	="row_add" 
 														id		="row_del_<?php echo $_obj_data_sub->get_id(); ?>" 
-														onclick="deleteRowsub(this)"><span class="glyphicon glyphicon-minus"></span></button>        
+														onclick="deleteRowsub(this)"><span class="glyphicon glyphicon-minus"></span>-</button>        
 												</td>
 											</tr>                                    
 									<?php
@@ -520,9 +504,9 @@
                                 id		="row_add_perm"
                                 title	="Add new item."
                                 onclick	="insRow()">
-                                <span class="glyphicon glyphicon-plus"></span></button>
+                                <span class="glyphicon glyphicon-plus"></span>+</button>
                         </fieldset>
-                	</div>                        
+					</div>                 
                 </div>
                 <!---->
                                         
@@ -580,7 +564,7 @@
 					+'\n\t<td>'													
 						+'<input type="hidden" name="sub_answer_id[]" id="sub_answer_id_' + $temp_guid + '" value="' + $temp_guid + '" />'
 							
-						+'<button type="button"	class="btn btn-danger btn-sm" name="row_add" id	="row_del_' + $temp_guid + '" onclick="deleteRowsub(this)"><span class="glyphicon glyphicon-minus"></span></button>'        
+						+'<button type="button"	class="btn btn-danger btn-sm" name="row_add" id	="row_del_' + $temp_guid + '" onclick="deleteRowsub(this)"><span class="glyphicon glyphicon-minus"></span>-</button>'        
 					+'</td>'
 				+'\n</tr>');				
 			
