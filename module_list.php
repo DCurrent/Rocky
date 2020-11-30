@@ -170,7 +170,7 @@
 				<thead>
 					<tr>
 						<th>Title</th>
-						<th>Intro</th>
+						<!-- th>Notes</th -->
 						<th>Created</th>
 						<th>Updated</th>
 					</tr>
@@ -186,13 +186,17 @@
 								$_obj_data_main = $_obj_data_main_list->current();
 								
 								
-								// Let's keep the the intro within reason.
-								$intro = limitStrlen($_obj_data_main->get_intro(), 47, true, false);
+								// Let's keep the the intro within reason, and strip tags to
+								// avoid any leftover open tags.
+								// As of 2020-11-30, length is limited by Stored Procedure output.
+								
+								//$intro = strip_tags (limitStrlen($_obj_data_main->get_intro(), 47, true, false),'');
+								//$intro = strip_tags ($_obj_data_main->get_intro(),'');
 								
 						?>
 									<tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
 										<td><?php echo $_obj_data_main->get_desc_title(); ?></td>
-										<td><?php echo $intro; ?></td>
+										<!-- <td><?php //echo $intro; ?></td -->
 										<td><?php if(is_object($_obj_data_main->get_log_create()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_create()->getTimestamp()); ?></td>
 										<td><?php if(is_object($_obj_data_main->get_log_update()) === TRUE) echo date(DATE_ATOM, $_obj_data_main->get_log_update()->getTimestamp()); ?></td>
 									</tr>                                    
