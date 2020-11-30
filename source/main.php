@@ -53,11 +53,11 @@
 		{
             require($file_name_full);
 			
-        	echo $file_name_full.', loaded successfully. -->'.PHP_EOL;
+        	//echo $file_name_full.', loaded successfully. -->'.PHP_EOL;
 		} 
 		else 
 		{
-            echo '<-- '.$file_name_full.' not found. -->'.PHP_EOL;
+            //echo '<-- '.$file_name_full.' not found. -->'.PHP_EOL;
         }
     }
 	
