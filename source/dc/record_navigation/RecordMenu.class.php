@@ -106,6 +106,7 @@
 			$id 		= $this->id;	
 			
 			$url_query	= $this->url_query;
+			$url_query->set_data('id', $id);
 			$url_query->set_data('action', \dc\record_navigation\RECORD_NAV_COMMANDS::DELETE);
 			
 			//if($this->id == DB_DEFAULTS::NEW_ID) $disabled = ' disabled';
@@ -451,7 +452,10 @@
 		// Create save command markup.
 		public function generate_command_save()
 		{	
+			$id = $this->id;
+			
 			$url_query	= $this->url_query;
+			$url_query->set_data('id', $id);
 			$url_query->set_data('action', \dc\record_navigation\RECORD_NAV_COMMANDS::SAVE);
 			
 			$result 	= NULL;
@@ -482,7 +486,10 @@
 		// Create save block command markup.
 		public function generate_command_save_block()
 		{	
+			$id = $this->id;
+			
 			$url_query	= $this->url_query;
+			$url_query->set_data('id', $id);
 			$url_query->set_data('action', \dc\record_navigation\RECORD_NAV_COMMANDS::SAVE);			
 			
 			$result 	= NULL;
