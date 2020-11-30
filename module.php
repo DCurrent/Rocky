@@ -103,6 +103,10 @@
 			// Populate the object from post values.			
 			$_main_data->populate_from_request();
 		
+			//var_dump($_main_data);
+			//exit();
+			//die();
+			
 			// Call update stored procedure.
 			$query->set_sql('{call module_update(@id						= ?,
 													@desc_title				= ?,
@@ -494,8 +498,8 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
-                	<label class="control-label col-sm-2" for="responsible_party">Instructor (Responsible party):</label>
+                <div class="form-group row">
+                	<label class="control-label col-sm-2" for="responsible_party">Instructor (Responsible party)</label>
                 	<div class="col-sm-10"> 
                 		<select class		= "form-control"
                                 name		= "responsible_party" 
@@ -523,9 +527,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "list_intro">List Intro:</label>
+                    		for		= "list_intro">List Intro</label>
                             
                 	<div class="col-sm-10">
                     	<textarea	class	= "form-control wysiwyg" 
@@ -535,9 +539,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "material_above_head">Content Above Introduction (Header):</label>
+                    		for		= "material_above_head">Content Above Introduction (Header)</label>
                             
                 	<div class="col-sm-10">
                 		<input type			= "text" 
@@ -549,9 +553,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "material_above">Content Above Introduction:</label>
+                    		for		= "material_above">Content Above Introduction</label>
                 	
                     <div class="col-sm-10">
                     	<textarea	class	= "form-control wysiwyg" 
@@ -561,16 +565,16 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
-                	<label class="control-label col-sm-2" for="intro">Introduction:</label>
+                <div class="form-group row">
+                	<label class="control-label col-sm-2" for="intro">Introduction</label>
                 	<div class="col-sm-10">
                     	<textarea class="form-control wysiwyg" rows="5" name="intro" id="intro"><?php echo $_main_data->get_intro(); ?></textarea>
                 	</div>
                 </div> 
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "material_below_head">Content Below Introduction (Header):</label>
+                    		for		= "material_below_head">Content Below Introduction (Header)</label>
                             
                 	<div class="col-sm-10">
                 		<input type			= "text" 
@@ -582,9 +586,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "material_below">Content below Introduction:</label>
+                    		for		= "material_below">Content below Introduction</label>
                 	
                     <div class="col-sm-10">
                     	<textarea	class	= "form-control wysiwyg" 
@@ -594,9 +598,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "instr_head">Instructions (Header):</label>
+                    		for		= "instr_head">Instructions (Header)</label>
                             
                 	<div class="col-sm-10">
                 		<input type			= "text" 
@@ -608,9 +612,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "instr">Instructions:</label>
+                    		for		= "instr">Instructions</label>
                 	
                     <div class="col-sm-10">
                     	<textarea	class	= "form-control wysiwyg" 
@@ -620,9 +624,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "email_list">Email List:</label>
+                    		for		= "email_list">Email List</label>
                 	
                     <div class="col-sm-10">
                     	<textarea	class	= "form-control" 
@@ -632,9 +636,9 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group row">
                 	<label 	class	= "control-label col-sm-2" 
-                    		for		= "cert_verbiage">Certificate Verbiage:</label>
+                    		for		= "cert_verbiage">Certificate Verbiage</label>
                 	
                     <div class="col-sm-10">
                     	<textarea	class	= "form-control wysiwyg" 
@@ -644,13 +648,15 @@
                 	</div>
                 </div>
                 
-                <div class="form-group">                    	
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <fieldset>
-                            <legend>Registration Fields</legend>
+                <div class="form-group row">                    	
+               		<label 	class	= "control-label col-sm-2" 
+                    		for		= "cert_verbiage">Registration Fields</label>
+                                                        
                             
-                            <p>Toggle fields that will be presented to and required from the end user for training regestration.</p>
-                                        
+                    <div class="col-sm-10">  
+						
+							<p>Toggle fields that will be presented to and required from the end user for training regestration.</p>
+						
                             <ul class="checkbox">
                                 <li>
                                     <input name="field_comments" id="filed_comments" value="1" type="checkbox" <?php if($_main_data->get_field_comments() == TRUE) echo ' checked '; ?>>
@@ -718,33 +724,28 @@
                                     <label for="field_phone">Phone</label>
                                 </li>                                  
                     		</ul>                                    
-                    	</fieldset>
+                    	</div>
                     </div>
+				
+					<hr />
+					<div class="form-group">
+						<div class="col-sm-12">
+							<?php echo $obj_navigation_rec->get_markup_cmd_save_block(); ?>
+						</div>
+					</div>
                 </div>
                                         
-                <hr />
-                <div class="form-group">
-                	<div class="col-sm-12">
-                		<?php echo $obj_navigation_rec->get_markup_cmd_save_block(); ?>
-                	</div>
-                </div>               
+                               
             </form>
             
             <?php echo $obj_navigation_main->get_markup_footer(); ?>
-        </div><!--container-->        
+        </div><!--container--> 
+	
     <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-40196994-1', 'uky.edu');
-  ga('send', 'pageview');
-  
-  $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-});
-</script>
+  	$(document).ready(function(){
+    	$('[data-toggle="tooltip"]').tooltip();
+	});
+	</script>
 
 	<script>
 		 var $temp_int = 0;
