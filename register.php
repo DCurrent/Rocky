@@ -22,7 +22,7 @@
 		$obj_navigation_main->generate_markup_footer();
 	
 	// Record navigation.
-		$obj_navigation_rec = new class_record_nav();
+		$obj_navigation_rec = new dc\record_navigation\RecordMenu();
 	
 	// Prepare redirect url with variables.
 		$url_query	= new url_query;	
@@ -46,7 +46,7 @@
 		$query = new class_db_query($db);
 	
 	// Record navigation and button commands.
-		$obj_navigation_rec = new class_record_nav();
+		//$obj_navigation_rec = new dc\record_navigation\class_record_nav();
 		
 		// Prepare redirect url with variables.
 		$url_query	= new url_query;
@@ -228,15 +228,18 @@
         <title><?php echo APPLICATION_SETTINGS::NAME; ?> - Register</title>        
         
          <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="source/bootstrap/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link rel="stylesheet" href="source/css/style.css" />
         <link rel="stylesheet" href="source/css/print.css" media="print" />
-                
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		
+		<!-- Latest minified Javascript -->
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
         
-        <!-- Latest compiled JavaScript -->
-        <script src="source/bootstrap/script.js"></script>        
+        <!-- Place inside the <head> of your HTML -->
+		<script type="text/javascript" src="source/tinymce/tinymce.min.js"></script>
+                
         <script src="../../libraries/javascript/options_update.js"></script>
     </head>
     
@@ -283,9 +286,9 @@
 						}
 					?>
                     
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="building_code">Building</label>
-                        <div class="col-sm-9">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2" for="building_code">Building</label>
+                        <div class="col-sm-10">
                             <select name="building_code" 
                                 id="building_code" 
                                 data-current="<?php echo $_obj_building_get->get_id(); ?>" 
@@ -301,9 +304,9 @@
                         </div>
                     </div> 
                                    
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="room">Room, Lab, or Area</label>
-                        <div class="col-sm-9">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2" for="room">Room, Lab, or Area</label>
+                        <div class="col-sm-10">
                             <select name="room" 
                                 id="room" 
                                 data-current="<?php echo $_main_data->get_room(); ?>" 
@@ -350,19 +353,13 @@
                 <fieldset id="fs_id">
                     <legend>UK Identification</legend>
 
-					<div class="form-group">
-                        <label class="control-label col-sm-3" for="account">Account</label>
-                        <div class="col-sm-9">
-                    
-                            <input 	type="text"                                                        	 
-                                name	="account" 
-                                id		="account" 
-                                class	="form-control"
-                                value 	= "<?php echo $_main_data->get_account(); ?>"
-                                disabled>
-                        </div>
-                    </div>
-                    
+					<div class="form-group row">
+                		<label class="control-label col-sm-2" for="account">Account</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control"  name="account" id="account" placeholder="jdoe123" value="<?php echo $_main_data->get_account(); ?>" required>
+						</div>
+                	</div>
+					                   
                     <?php 
 						
 						$client_name_f = $_main_data->get_name_f();
@@ -374,18 +371,13 @@
 					
 					?>
                     
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="name_f">First Name</label>
-                        <div class="col-sm-9">
-                        
-                            <input 	type="text"                                                        	 
-                                name	="name_f" 
-                                id		="name_f" 
-                                class	="form-control"
-                                value 	= "<?php echo $client_name_f; ?>">
-                        </div>
-                    </div>
-                    
+					<div class="form-group row">
+                		<label class="control-label col-sm-2" for="name_f">First Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control"  name="name_f" id="name_f" placeholder="John" value="<?php echo $client_name_f; ?>" required>
+						</div>
+                	</div>
+					
                     <?php 
 						
 						$client_name_l = $_main_data->get_name_l();
@@ -397,18 +389,13 @@
 					
 					?>
                     
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="name_l">Last Name</label>
-                        <div class="col-sm-9">
-                        
-                            <input 	type="text"                                                        	 
-                                name	="name_l" 
-                                id		="name_l" 
-                                class	="form-control"
-                                value 	= "<?php echo $client_name_l; ?>">
-                        </div>
-                    </div>
-
+					<div class="form-group row">
+                		<label class="control-label col-sm-2" for="name_l">Last Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control"  name="name_l" id="name_l" placeholder="Doe" value="<?php echo $client_name_l; ?>" required>
+						</div>
+                	</div>
+					                    
                     <?php
 						
 						// --Departments
@@ -424,9 +411,9 @@
                     ?>          
                             
                                 
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="department">Department</label>
-                            <div class="col-sm-9">
+                        <div class="form-group row">
+                            <label class="control-label col-sm-2" for="department">Department</label>
+                            <div class="col-sm-10">
                                 <select name="department" 
                                     id="department"
                                     class="form-control">
@@ -480,10 +467,10 @@
 						{
                     ?>                        
                            
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="status">UK Status</label>                                    
+                            <div class="form-group row">
+                                <label class="control-label col-sm-2" for="status">UK Status</label>                                    
                                 
-                                <div class="col-sm-9">
+                                <div class="col-sm-10">
                                             
                                     <?php																
                                         if(is_object($_obj_field_source_uk_status_list) === TRUE)
@@ -519,7 +506,7 @@
                                                                 name	="status" 
                                                                 id		="status_<?php echo $_obj_field_source_uk_status->get_id(); ?>"
                                                                 value	="<?php echo $_obj_field_source_uk_status->get_id(); ?>" <?php echo $uk_status_selected; ?> 
-                                                                required><?php echo $_obj_field_source_uk_status->get_label(); ?>
+                                                                required>&nbsp;<?php echo $_obj_field_source_uk_status->get_label(); ?>
                                                         </label> 
                                                     </div>
                                                 <?php   
@@ -536,9 +523,9 @@
 						}                  
                     ?>   
                     
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="supervisor_name_f">Supervisor First Name</label>
-                        <div class="col-sm-9">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2" for="supervisor_name_f">Supervisor First Name</label>
+                        <div class="col-sm-10">
                         
                             <input 	type="text"                                                        	 
                                 name	="supervisor_name_f" 
@@ -548,9 +535,9 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="supervisor_name_l">Supervisor Last Name</label>
-                        <div class="col-sm-9">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2" for="supervisor_name_l">Supervisor Last Name</label>
+                        <div class="col-sm-10">
                     
                             <input 	type="text"                                                        	 
                                 name	="supervisor_name_l" 
@@ -607,10 +594,10 @@
 						}
 					
 					?>
-                    
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="email">Email</label>
-                        <div class="col-sm-9">
+                    					
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2" for="email">Email</label>
+                        <div class="col-sm-10">
                     
                             <input 	type="text"                                                        	 
                                 name	="email" 
@@ -620,9 +607,9 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="phone">Phone</label>
-                        <div class="col-sm-9">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2" for="phone">Phone</label>
+                        <div class="col-sm-10">
                     
                             <input 	type="text"                                                        	 
                                 name	="phone" 
@@ -639,15 +626,7 @@
             </form>
         </div><!--container-->        
 		
-		<script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-            
-            ga('create', 'UA-40196994-1', 'uky.edu');
-            ga('send', 'pageview');
-            
+		<script>            
             $('.room_search').change(function(event){	
                 options_update(event, null, '#room');	
             });
@@ -656,7 +635,7 @@
                 $('[data-toggle="tooltip"]').tooltip();
             
                 options_update(event, null, '#building_code');
-				            
+				
             });
         </script>
     </body>
