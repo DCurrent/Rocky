@@ -35,8 +35,10 @@
 	
 	$url_query->set_url_base($_SERVER['PHP_SELF']);
 	$url_query->set_data('fk_id', $obj_navigation_rec->get_fk_id());
-		
-	$paging = new dc\record_navigation\Paging();	
+
+	$paging_config = new dc\record_navigation\PagingConfig;
+	$paging_config->set_url_query_instance(new dc\url_query\URLQuery);
+	$paging = new dc\record_navigation\Paging($paging_config);
 	
 	$query->set_sql('{call question_list(@fk_id				= ?,
 										@page_current 		= ?,														 
@@ -60,6 +62,7 @@
 	$_obj_data_main_list = $query->get_line_object_list();
 
 	// Send control data from procedure to paging object.
+
 	$paging->set_page_last($page_last);
 	$paging->set_row_count_total($row_count);
 
@@ -130,7 +133,6 @@
                             <th>Text</th>
                             <th>Created</th>
                             <th>Updated</th>
-                            <th><!--Action--></th>
                         </tr>
                     </thead>
                     <tfoot>
