@@ -89,8 +89,8 @@
 					// pass current request value. 
 					if(method_exists($this, $method)=== TRUE)
 					{						
-						$this->$method($_REQUEST[$key]);						
-					}
+						$this->$method($_REQUEST[$key]);                        
+                    }
 				}
 			}
 		}
