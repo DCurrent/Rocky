@@ -83,26 +83,36 @@ class Session implements \SessionHandlerInterface, iSession
     */
 	public function read($id)
     {		
-		// error_log('read: '.$id);        
-
 		$dbh_pdo_connection = $this->config->get_database();
 		
-		// Populate database class members with 
-		// the SQL string of our stored procedure
-		// and its parameter array. Then we can 
-		// execute.
+		/* 
+        * Populate database class members with 
+		* the SQL string of our stored procedure
+		* and its parameter array. Then we can 
+		* execute.
+		*/
+        try
+        {
+            $sql_string = 'EXEC '.$this->config->get_sp_prefix().$this->config->get_sp_get().' :id';
+            
+            $dbh_pdo_statement = $dbh_pdo_connection->prepare($sql_string);
+            $dbh_pdo_statement->bindParam(':id', $id, \PDO::PARAM_STR);
 		
-		$sql_string = 'EXEC '.$this->config->get_sp_prefix().$this->config->get_sp_get().' :id';
-		$dbh_pdo_statement = $dbh_pdo_connection->prepare($sql_string);
+            $dbh_pdo_statement->execute();
+            
+            print_r($dbh_pdo_statement->errorInfo());
+        }
+        catch(\PDOException $e)
+        {
+            die('Database error: '.$e->getMessage());            
+        }	
 		
-		$dbh_pdo_statement->bindParam(':id', $id, \PDO::PARAM_STR);
-		
-		$dbh_pdo_statement->execute();		
-		
-		// Fetch row into an object using our data class. 
-		// If we fail, we need to start up a blank object 
-		// instead.	
-		
+		/*
+        *Fetch row into an object using our data class. 
+		* If we fail, we need to start up a blank object 
+		* instead.	
+		*/
+        
 		$result = $dbh_pdo_statement->fetchObject(__NAMESPACE__.'\Data');
 					
 		if(!$result)
@@ -110,11 +120,13 @@ class Session implements \SessionHandlerInterface, iSession
 			$result = new Data();			
 		}		
 		
-		// 7.1+ throws an error when returning a
-		// NULL value on session start up. If our
-		// session_data member is NULL, return
-		// an empty string instead.
-				
+		/* 
+        * 7.1+ throws an error when returning a
+		* NULL value on session start up. If our
+		* session_data member is NULL, return
+		* an empty string instead.
+		*/
+        
 		$output = $result->get_session_data();	
 		
 		if(is_null($output))
@@ -149,21 +161,32 @@ class Session implements \SessionHandlerInterface, iSession
 		
 		$dbh_pdo_connection = $this->config->get_database();
 		
-		// Populate database class members with 
-		// the SQL string of our stored procedure
-		// and its parameter array. Then we can 
-		// execute.
-		
-		$sql_string = 'EXEC '.$this->config->get_sp_prefix().$this->config->get_sp_set().' :id, :data, :source_file, :client_ip';
+		/* 
+        * Populate database class members with 
+		* the SQL string of our stored procedure
+		* and its parameter array. Then we can 
+		* execute.
+		*/
+        
+        try
+        {   
+            $sql_string = 'EXEC '.$this->config->get_sp_prefix().$this->config->get_sp_set().' :id, :data, :source_file, :client_ip';
 			
-		$dbh_pdo_statement = $dbh_pdo_connection->prepare($sql_string);
-				
-		$dbh_pdo_statement->bindParam(':id', $id, \PDO::PARAM_STR);
-		$dbh_pdo_statement->bindParam(':data', $data, \PDO::PARAM_STR);
-		$dbh_pdo_statement->bindParam(':source_file', $source, \PDO::PARAM_STR);
-		$dbh_pdo_statement->bindParam(':client_ip', $ip, \PDO::PARAM_STR);
-		
-		$rowcount = $dbh_pdo_statement->execute();
+            $dbh_pdo_statement = $dbh_pdo_connection->prepare($sql_string);
+
+            $dbh_pdo_statement->bindParam(':id', $id, \PDO::PARAM_STR);
+            $dbh_pdo_statement->bindParam(':data', $data, \PDO::PARAM_STR);
+            $dbh_pdo_statement->bindParam(':source_file', $source, \PDO::PARAM_STR);
+            $dbh_pdo_statement->bindParam(':client_ip', $ip, \PDO::PARAM_STR);
+
+            $rowcount = $dbh_pdo_statement->execute();   
+
+            // print_r($dbh_pdo_statement->errorInfo());
+        }
+        catch(\PDOException $e)
+        {
+            die('Database error: '.$e->getMessage());            
+        }
 						
 		// Return TRUE. 
 		return TRUE;
