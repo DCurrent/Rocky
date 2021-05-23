@@ -100,7 +100,7 @@ class Session implements \SessionHandlerInterface, iSession
 		
             $dbh_pdo_statement->execute();
             
-            print_r($dbh_pdo_statement->errorInfo());
+            //print_r($dbh_pdo_statement->errorInfo());
         }
         catch(\PDOException $e)
         {
