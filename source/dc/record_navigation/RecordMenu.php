@@ -2,6 +2,39 @@
 
 	namespace dc\record_navigation;
 	
+    
+    /* 
+    * Used to capture control code output
+    * from database.
+    */
+    class data_record_navigation
+    {
+        private $nav_first = NULL;
+        private $nav_last = NULL;
+        private $nav_next = NULL;
+        private $nav_previous = NULL;
+        
+        public function get_nav_first()
+        {
+            return $this->nav_first;
+        }
+        
+        public function get_nav_last()
+        {
+            return $this->nav_last;
+        }
+        
+        public function get_nav_next()
+        {
+            return $this->nav_next;
+        }
+        
+        public function get_nav_previous()
+        {
+            return $this->nav_previous;
+        }        
+    }
+
 	interface iRecordMenu
 	{
 		public function populate_from_request();
@@ -68,7 +101,7 @@
 					
 		public function __construct()
 		{		
-			$this->url_query = new \dc\url_query\URLQuery();
+			$this->url_query = new \dc\fraser\URLFix();
 			
 			$this->populate_from_request();	
 		}
@@ -89,8 +122,8 @@
 					// pass current request value. 
 					if(method_exists($this, $method)=== TRUE)
 					{						
-						$this->$method($_REQUEST[$key]);                        
-                    }
+						$this->$method($_REQUEST[$key]);						
+					}
 				}
 			}
 		}
