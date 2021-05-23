@@ -4,7 +4,7 @@
 	
 	// User access.
 	$access_obj = new \dc\stoeckl\status();
-	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+	$access_obj->get_member_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
 		
 	$access_obj->verify();
 	$access_obj->action();

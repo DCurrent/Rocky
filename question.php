@@ -37,7 +37,7 @@
 				
 	// User access.
 	$access_obj = new \dc\stoeckl\status();
-	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+	$access_obj->get_member_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
 	$access_obj->set_redirect($url_query->return_url_encoded());
 		
 	$access_obj->verify();
@@ -134,7 +134,7 @@
 						$_main_data->get_feedback_incorrect(),
 						$_main_data->get_text(),						
 						date(DATE_ATOM),
-						$access_obj->get_account(),
+						$access_obj->get_member_account(),
 						$access_obj->get_ip());
 			
 			$query->set_params($params);			
@@ -162,7 +162,7 @@
 				$params = array(array($_main_data->get_id(), 			SQLSRV_PARAM_IN),
 								array($_obj_data_sub_request->xml(), 	SQLSRV_PARAM_IN),
 								array(date(DATE_ATOM), 					SQLSRV_PARAM_IN),
-								array($access_obj->get_account(),		SQLSRV_PARAM_IN),
+								array($access_obj->get_member_account(),		SQLSRV_PARAM_IN),
 								array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 				
 				$query->set_params($params);			

@@ -30,12 +30,15 @@
 		return $trimmed_text;
 	}
 
+    /* Prepare redirect url with variables. */
+	$url_query	= new \dc\fraser\URLFix();
 
-	// Access control.
+	/* User access. */
 	$access_obj = new \dc\stoeckl\status();
-	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
-		
-	$access_obj->verify();
+	$access_obj->get_member_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+	$access_obj->set_redirect($url_query->return_url());
+	
+	$access_obj->verify();	
 	$access_obj->action();
 	
 	// Start page cache.
@@ -45,22 +48,13 @@
 	// Set up navigaiton.
 	$navigation_obj = new class_navigation();
 	$navigation_obj->generate_markup_nav();
-	$navigation_obj->generate_markup_footer();	
+	$navigation_obj->generate_markup_footer();		
 	
-	// Set up database.
-	$db_conn_set = new class_db_connect_params();
-	$db_conn_set->set_name(DATABASE::NAME);
-	$db_conn_set->set_user('ehsinfo_public');
-	$db_conn_set->set_password('eh$inf0');
-	
-	$db = new class_db_connection($db_conn_set);
-	$query = new class_db_query($db);
-		
-	$paging_config = new dc\record_navigation\PagingConfig;
-	$paging_config->set_url_query_instance(new dc\url_query\URLQuery);
-	$paging = new dc\record_navigation\Paging($paging_config);
-	
-   
+    /* New DB */
+    $paging_config = new \dc\record_navigation\PagingConfig();
+    $paging_config->set_url_query_instance($url_query);
+	$paging = new \dc\record_navigation\Paging($paging_config);
+	   
     /* 
     * Source query.  Call the stored procedure
     * and send it any filter or sorting params
@@ -79,6 +73,8 @@
         $dbh_pdo_statement->bindValue(':page_rows', $paging->get_row_max(), \PDO::PARAM_INT);
         
         $dbh_pdo_statement->execute();   
+        
+        print_r($dbh_pdo_statement->errorInfo());
     }
     catch(\PDOException $e)
     {

@@ -6,13 +6,13 @@
 	//$page_obj = new class_page_cache();
 
 	$access_obj_process = new \dc\stoeckl\process();
-	$access_obj_process->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
-	$access_obj_process->get_config()->set_use_local(FALSE);
+	$access_obj_process->get_member_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+	$access_obj_process->get_member_config()->set_use_local(FALSE);
 	$access_obj_process->process_control();
 	
 	//Get and verify log in status.
 	$access_obj = new \dc\stoeckl\status();
-	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);	
+	$access_obj->get_member_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);	
 	$access_obj->verify();
 		
 	// Set up navigaiton.
@@ -62,7 +62,7 @@
 				<?php
 				
 					// Logged in?
-					if($access_obj->get_account())
+					if($access_obj->get_member_account())
 					{
 						/* This sets the $time variable to the current hour in the 24 hour clock format */
 						$time = date("H");
@@ -80,7 +80,7 @@
 						if ($time >= "17") {
 							echo "Good evening ";
 						}
-						echo $access_obj->get_name_f();
+						echo $access_obj->get_member_name_f();
 				?>! Thank you for using <?php echo APPLICATION_SETTINGS::NAME; ?>. To get started, select an item from the navigation bar.</p>
                 <?php
 					}
@@ -111,11 +111,8 @@
             </div> 
                     
             <?php echo $navigation_obj->get_markup_footer(); ?>
-        </div><!--container-->        
-    
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        </div><!--container-->   
+	
 </body>
 </html>
 

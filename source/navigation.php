@@ -16,7 +16,7 @@
 			$this->directory_prime 	= APPLICATION_SETTINGS::DIRECTORY_PRIME;
 			$this->access_obj		= new \dc\stoeckl\status();
 			
-			$this->access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
+			$this->access_obj->get_member_config()->set_authenticate_url(APPLICATION_SETTINGS::AUTHENTICATE_URL);
 		}
 		
 		public function get_directory_local()
@@ -47,8 +47,10 @@
 		public function generate_markup_nav()
 		{
 			$class_add = NULL;
-			
-			if(!$this->access_obj->get_account()) $class_add .= "disabled";
+			         
+            
+            //echo '<!-- Account: '.$this->access_obj->get_member_account().'-->';
+			if(!$this->access_obj->get_member_account()) $class_add .= "disabled";
 			
 			// Start output caching.
 			ob_start();
@@ -78,16 +80,16 @@
 					<div class="float-right">
 
 						<?php
-							if($this->access_obj->get_account())
+							if($this->access_obj->get_member_account())
 							{
 						?>
-								<a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->name_full(); ?></a>
+								<a href="<?php echo $this->access_obj->get_member_config()->get_authenticate_url(); ?>?auth_logoff=<?php echo TRUE; ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->access_obj->name_full(); ?></a>
 						<?php
 							}
 							else
 							{
 						?>
-								<a href="<?php echo $this->access_obj->get_config()->get_authenticate_url(); ?>"><span class="glyphicon glyphicon-log-in"></span> Guest</a>
+								<a href="<?php echo $this->access_obj->get_member_config()->get_authenticate_url(); ?>"><span class="glyphicon glyphicon-log-in"></span> Guest</a>
 						<?php
 							}
 						?>
@@ -112,9 +114,9 @@
 			<div class="card bg-light">
 				<div class="card-body">
 					
-					<img class="float-right d-none d-sm-inline" src="<?php echo $this->directory_prime; ?>/media/php_logo_1.png" class="img-responsive pull-right .d-sm-none" alt="Powered by objected oriented PHP." title="Powered by object oriented PHP." />
+					<img class="float-right d-none d-sm-inline img-responsive pull-right .d-sm-none" src="<?php echo $this->directory_prime; ?>/media/php_logo_1.png" alt="Powered by objected oriented PHP." title="Powered by object oriented PHP." />
 					
-					<img class="float-left d-none d-sm-inline" style="margin-right: 15px; width: 100px" src="<?php echo $this->directory_prime; ?>/media/uk_logo_1.png" class="img-responsive pull-right .d-sm-none" alt="Powered by objected oriented PHP." title="Powered by object oriented PHP." />
+					<img class="float-left d-none d-sm-inline img-responsive pull-right .d-sm-none" style="margin-right: 15px; width: 100px" src="<?php echo $this->directory_prime; ?>/media/uk_logo_1.png" alt="Powered by objected oriented PHP." title="Powered by object oriented PHP." />
 					
 					<span class="text-muted small"><?php echo APPLICATION_SETTINGS::NAME; ?> Ver <?php echo APPLICATION_SETTINGS::VERSION; ?></span>
 					<br>
