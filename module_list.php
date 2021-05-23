@@ -60,28 +60,64 @@
 	$paging_config->set_url_query_instance(new dc\url_query\URLQuery);
 	$paging = new dc\record_navigation\Paging($paging_config);
 	
-	$query->set_sql('{call module_list(@page_current 		= ?,														 
-										@page_rows 			= ?,
-										@page_last 			= ?,
-										@row_count_total	= ?)}');
-											
-	$page_last 	= NULL;
-	$row_count 	= NULL;		
-	
-	$params = array(array($paging->get_page_current(), 	SQLSRV_PARAM_IN), 
-					array($paging->get_row_max(), 		SQLSRV_PARAM_IN), 
-					array($page_last, 					SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_INT),
-					array($row_count, 					SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_INT));
+   
+    /* 
+    * Source query.  Call the stored procedure
+    * and send it any filter or sorting params
+    * we need.
+    */
 
-	$query->set_params($params);
-	$query->query();
-	
-	$query->get_line_params()->set_class_name('class_module_data');
-	$_obj_data_main_list = $query->get_line_object_list();
+    $sql_string = 'EXEC module_list :page_current,														 
+										:page_rows';
 
-	// Send control data from procedure to paging object.
-	$paging->set_page_last($page_last);
-	$paging->set_row_count_total($row_count);
+    
+    try
+    {   
+        $dbh_pdo_statement = $dc_yukon_connection->get_member_connection()->prepare($sql_string);
+		
+	    $dbh_pdo_statement->bindValue(':page_current', $paging->get_page_current(), \PDO::PARAM_INT);
+        $dbh_pdo_statement->bindValue(':page_rows', $paging->get_row_max(), \PDO::PARAM_INT);
+        
+        $dbh_pdo_statement->execute();   
+    }
+    catch(\PDOException $e)
+    {
+        die('Database error : '.$e->getMessage());
+    }
+
+    /*
+    * Build a list of data objects. Each object in the
+    * list represents a row of data from our query.
+    */
+
+    $_row_object = NULL;
+    $_obj_data_main_list = new \SplDoublyLinkedList();
+
+    while($_row_object = $dbh_pdo_statement->fetchObject('class_module_data', array()))
+    {       
+        $_obj_data_main_list->push($_row_object);
+    }
+    
+    /*
+    * Now we need the paging information for 
+    * our paging control.
+    */
+
+    try
+    {         
+        $dbh_pdo_statement->nextRowset();        
+        
+        $_paging_data = $dbh_pdo_statement->fetchObject('dc\record_navigation\data_paging', array());
+        
+        $paging->set_page_last($_paging_data->get_page_count());
+        $paging->set_row_count_total($_paging_data->get_record_count());
+    }
+    catch(\PDOException $e)
+    {
+        die('Database error : '.$e->getMessage());
+    }
+
+	
 
 
 	// Clickable rows. Clicking on table rows
