@@ -765,7 +765,7 @@
 						+'<input type="text" name="sub_access_access[]" id="sub_access_access_'+ $temp_int + '" class="form-control" />'												
 					+'</td>'					
 					+'<td colspan="2">'
-						+'<input type="hidden" name="sub_access_id[]" id="sub_access_id_js_'+$temp_int+'" value="<?php echo DB_DEFAULTS::NEW_ID; ?>" />'
+						+'<input type="hidden" name="sub_access_id[]" id="sub_access_id_js_'+$temp_int+'" value="<?php echo dc\yukon\DEFAULTS::NEW_ID; ?>" />'
 						+'<button type="button" class ="btn btn-danger btn-sm" name="row_add" id="row_del_js_'+$temp_int+'" onclick="deleteRowsub(this)"><span class="glyphicon glyphicon-minus"></span></button>'						
 					+'</td>'
 				+'<tr>');

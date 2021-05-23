@@ -446,7 +446,7 @@
 										
 											// Blank IDs will cause a database error, so make sure there is a
 											// usable one here.
-											if(!$_obj_data_sub->get_id()) $_obj_data_sub->set_id(DB_DEFAULTS::NEW_ID);
+											if(!$_obj_data_sub->get_id()) $_obj_data_sub->set_id(dc\yukon\DEFAULTS::NEW_ID);
 										?>
 											<tr>
 												<td>                                                    	

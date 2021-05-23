@@ -142,7 +142,7 @@
 			$url_query->set_data('id', $id);
 			$url_query->set_data('action', \dc\record_navigation\RECORD_NAV_COMMANDS::DELETE);
 			
-			//if($this->id == DB_DEFAULTS::NEW_ID) $disabled = ' disabled';
+			//if($this->id == dc\yukon\DEFAULTS::NEW_ID) $disabled = ' disabled';
 			if($this->id == -1) $disabled = ' disabled';
 			
 			
@@ -252,7 +252,7 @@
 			$id = $this->id_last;			
 					
 			// If id is valid, construct a usable link.
-			//if($id && $this->id != DB_DEFAULTS::NEW_GUID)
+			//if($id && $this->id != dc\yukon\DEFAULTS::NEW_GUID)
 			if($id && $this->id != '00000000-0000-0000-0000-000000000000')
 			{				
 				$url_query->set_data('id', $id);
@@ -318,10 +318,10 @@
 			$url_query	= $this->url_query;
 			$url_query->set_data('action', \dc\record_navigation\RECORD_NAV_COMMANDS::NEW_BLANK);
 			
-			//$url_query->set_data('id', DB_DEFAULTS::NEW_ID);
+			//$url_query->set_data('id', dc\yukon\DEFAULTS::NEW_ID);
 			$url_query->set_data('id', -1);
 			
-			//if($this->id == DB_DEFAULTS::NEW_ID) $disabled = ' disabled';
+			//if($this->id == dc\yukon\DEFAULTS::NEW_ID) $disabled = ' disabled';
 			if($this->id == -1) $disabled = ' disabled';
 							
 							
@@ -359,10 +359,10 @@
 			$url_query->set_data('action', -1);
 			
 			
-			//$url_query->set_data('id', DB_DEFAULTS::NEW_ID);
+			//$url_query->set_data('id', dc\yukon\DEFAULTS::NEW_ID);
 			$url_query->set_data('id', -1);
 			
-			//if($this->id == DB_DEFAULTS::NEW_ID) 
+			//if($this->id == dc\yukon\DEFAULTS::NEW_ID) 
 						$disabled = ' disabled';
 			
 			// Start caching.
